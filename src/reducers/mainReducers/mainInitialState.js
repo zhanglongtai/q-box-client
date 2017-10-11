@@ -1,4 +1,4 @@
-const mainWinInitailState = {
+const mainInitailState = {
     inform: {
         isFetching: true,
         receiveSuccess: true,
@@ -11,6 +11,7 @@ const mainWinInitailState = {
         errorMsg: '',
 		list: [],
     },
+    content: 'inform', // 'inform' or 'recentActivity'
 }
 
-export default mainWinInitailState
+export default mainInitailState

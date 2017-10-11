@@ -5,7 +5,7 @@ import Header from './Header'
 import Content from './Content'
 import Footer from './Footer'
 
-class MainWin extends React.Component {
+class Main extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -20,7 +20,7 @@ class MainWin extends React.Component {
 
         return (
             <div
-                className="main-win-container"
+                className="main-container"
                 style={styles.container}
             >
                 <Header />
@@ -31,4 +31,4 @@ class MainWin extends React.Component {
     }
 }
 
-export default MainWin
+export default Main
