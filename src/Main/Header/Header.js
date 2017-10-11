@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const { ipcRenderer } = window.require('electron');
+
 class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -13,6 +15,10 @@ class Header extends React.Component {
 
     changeContent(content) {
         this.props.setContent(content)
+    }
+
+    showMenu() {
+        ipcRenderer.send('main-header-settings-clicked')
     }
 
     render() {
@@ -33,17 +39,18 @@ class Header extends React.Component {
             },
             tabItemHover: {
                 height: 50,
-                backgroundColor: 'grey',
+                backgroundColor: '#d1d5da',
+                cursor: 'pointer',
             },
             tabText: {
                 margin: '0 10px 0 10px',
                 height: 45,
-                lineHeight: 45,
+                lineHeight: '45px',
             },
             tabTextSelected: {
                 margin: '0 10px 0 10px',
                 height: 45,
-                lineHeight: 45,
+                lineHeight: '45px',
                 color: 'blue',
             },
             tabSlider: {
@@ -67,6 +74,15 @@ class Header extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
             },
+            btnItemHover: {
+                height: 50,
+                width: 50,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#d1d5da',
+                cursor: 'pointer',
+            },
         }
 
         const tabs = (
@@ -77,7 +93,7 @@ class Header extends React.Component {
                 <div
                     className="header-tab-item"
                     onClick={this.changeContent.bind(null, 'inform')}
-                    style={this.state.hover === 'inform' ? styles.tabItemHover : styles.tabItemHover}
+                    style={this.state.hover === 'inform' ? styles.tabItemHover : styles.tabItem}
                     onMouseEnter={() => {this.setState({hover: 'inform'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
@@ -93,7 +109,7 @@ class Header extends React.Component {
                 <div
                     className="header-tab-item"
                     onClick={this.changeContent.bind(null, 'recentActivity')}
-                    style={this.state.hover === 'recentActivity' ? styles.tabItemHover : styles.tabItemHover}
+                    style={this.state.hover === 'recentActivity' ? styles.tabItemHover : styles.tabItem}
                     onMouseEnter={() => {this.setState({hover: 'recentActivity'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
@@ -116,7 +132,7 @@ class Header extends React.Component {
             >
                 <div
                     className="header-btn-item"
-                    style={styles.btnItem}
+                    style={this.state.hover === 'folder' ? styles.btnItemHover : styles.btnItem}
                     onMouseEnter={() => {this.setState({hover: 'folder'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
@@ -126,7 +142,7 @@ class Header extends React.Component {
                 </div>
                 <div
                     className="header-btn-item"
-                    style={styles.btnItem}
+                    style={this.state.hover === 'website' ? styles.btnItemHover : styles.btnItem}
                     onMouseEnter={() => {this.setState({hover: 'website'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
@@ -136,7 +152,8 @@ class Header extends React.Component {
                 </div>
                 <div
                     className="header-btn-item"
-                    style={styles.btnItem}
+                    style={this.state.hover === 'settings' ? styles.btnItemHover : styles.btnItem}
+                    onClick={this.showMenu}
                     onMouseEnter={() => {this.setState({hover: 'settings'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >

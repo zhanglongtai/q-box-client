@@ -1,22 +1,13 @@
-// const {
-// 	app,
-// 	Menu,
-// 	BrowserWindow,
-// 	dialog,
-// 	Tray,
-// 	ipcMain,
-// 	shell,
-// } = require('electron')
-import {
+const {
 	app,
 	Menu,
 	BrowserWindow,
+	dialog,
 	Tray,
 	ipcMain,
 	shell,
-} from 'electron'
-import Position from 'electron-positioner'
-import fs from 'fs'
+} = require('electron')
+const Position = require('electron-positioner')
 
 let reactDevtool = null
 switch (process.platform) {
@@ -24,62 +15,190 @@ switch (process.platform) {
 		reactDevtool = '/home/tiger/.config/google-chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.3.3_0'
 		break
 	case 'win32':
-	    reactDevtool = 'C:\\Users\\Tiger\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.0_0'
-        break
+		reactDevtool = 'C:\\Users\\Tiger\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.2_0'
+		break
 }
 
-const ENV = 'dev'
-// const ENV = 'pro'
-
 // win pool for client
-let winMainWin = null
+const win = {
+    winLogin: null,
+    winMain: null,
+}
 
-function createMainWin() {
+// app config
+const config = {
+	iconPath: '',
+	trayPath: `${__dirname}/renderer/icon/tray.png`,
+	folderPath: 'C:\\Users\\Tiger\\Dropbox',
+	environment: 'dev', // 'dev' or 'prod'
+	mainPosition: null,
+	tray: null,
+	menu: null,
+	sync: true,
+}
+
+// ========== Tray ==========
+function createTray() {
+	if (config.tray === null) {
+		config.tray = new Tray(config.trayPath)
+	}
+
+	function handleClick() {
+		// judge login or not
+		if (win.winLogin !== null) {
+			if (win.winLogin.isVisible()) {
+				win.winLogin.hide()
+			} else {
+				win.winLogin.show()
+			}
+		} else {
+			if (win.winMain.isVisible()) {
+				hideMain()
+			} else {
+				showMain()
+			}
+		}
+	}
+
+	config.tray.on('click', handleClick)
+
+	config.tray.on('right-click', handleClick)
+
+	config.tray.on('double-click', () => {
+		shell.showItemInFolder(config.folderPath)
+	})
+}
+// ========== Tray ==========
+
+// ========== Main ==========
+function createMain() {
 	const options = {
 		width: 400,
 		height: 600,
 		show: false,
 		frame: false,
 	}
+	win.winMain = new BrowserWindow(options)
 
-	winMainWin = new BrowserWindow(options)
+	if (config.environment === 'dev') {
+		win.winMain.webContents.openDevTools()
+	}
 
-	if (ENV === 'dev') {
-        winMainWin.webContents.openDevTools()
-    }
+	config.mainPosition = new Position(win.winMain)
 
-	mainWinPosition = new Position(winMainWin)
-
-	winMainWin.on('blur', () => {
-		hideMainWin()
+	win.winMain.on('blur', () => {
+		hideMain()
 	})
 
-	winMainWin.loadURL(`file://${__dirname}/renderer/infoBar.html`)
+	win.winMain.loadURL(`file://${__dirname}/renderer/main.html`)
 }
 
-function showInfoBar() {
-    const trayPos = tray.getBounds()
+function showMain() {
+	const trayPos = config.tray.getBounds()
 
-    console.log(trayPos)
+	const windowPosition = (process.platform === 'win32') ? 'bottomRight' : 'topRight'
+	// const windowPosition = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter'
 
-    const windowPosition = (process.platform === 'win32') ? 'bottomRight' : 'topRight'
-    // const windowPosition = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter';
-
-	const position = infoBarPosition.calculate(windowPosition, trayPos)
+	const position = config.mainPosition.calculate(windowPosition, trayPos)
 
 	const x = position.x
 	const y = position.y
 
-	winMainWin.setPosition(x, y)
-	winMainWin.show()
+	win.winMain.setPosition(x, y)
+	win.winMain.show()
 }
 
-function hideInfoBar() {
-	if (winMainWin !== null) {
-		if (tray !== null) {
-			tray.setHighlightMode('never')
+function hideMain() {
+	if (win.winMain !== null) {
+		if (config.tray !== null) {
+			config.tray.setHighlightMode('never')
 		}
 
-		winMainWin.hide()
+		win.winMain.hide()
 	}
 }
+
+ipcMain.on('main-header-settings-clicked', () => {
+	createMenu()
+})
+// ========== Main ==========
+
+// ========== Menu ==========
+function createMenu() {
+	const template = [
+		{
+			label: '已使用 1%',
+			enabled: false,
+		},
+		{
+			label: '获取更多空间',
+			click: () => {
+				shell.openExternal('https://baidu.com')
+			},
+			position: 'endof=2',
+		},
+		{
+			label: config.sync ? '最新' : '同步已暂停',
+			enabled: false,
+			position: 'endof=3',
+		},
+		{
+			label: config.sync ? '暂停同步' : '继续同步',
+			click: () => {
+				config.sync = !config.sync
+			},
+			position: 'endof=3',
+		},
+		{
+			label: '首选项',
+			position: 'endof=4',
+		},
+		{
+			label: '帮助中心',
+			position: 'endof=4',
+		},
+		{
+			label: '退出',
+			click: () => {
+				app.quit()
+			},
+			position: 'endof=5',
+		},
+	]
+
+	config.menu = Menu.buildFromTemplate(template)
+	config.menu.popup(win.winMain)
+}
+// ========== Menu ==========
+
+// ========== Login ==========
+function createLogin() {
+	const options = {
+		width: 400,
+		height: 600,
+		show: false,
+		icon: config.iconPath,
+	}
+	win.winLogin = new BrowserWindow(options)
+
+	// don't display menu
+	win.winLogin.setMenuBarVisibility(false)
+
+	win.winLogin.loadURL(`file://${__dirname}/renderer/login.html`)
+
+	win.winLogin.once('ready-to-show', () => {
+		win.winLogin.show()
+	})
+}
+// ========== Login ==========
+
+app.on('ready', () => {
+	if (config.environment === 'dev') {
+		BrowserWindow.addDevToolsExtension(reactDevtool)
+	}
+
+	// createLogin()
+	createTray()
+	createMain()
+	showMain()
+});

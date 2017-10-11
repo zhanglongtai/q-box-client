@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-import Header from './Header'
+import { HeaderContainer } from './Header'
 import Content from './Content'
 import Footer from './Footer'
 
@@ -23,7 +23,7 @@ class Main extends React.Component {
                 className="main-container"
                 style={styles.container}
             >
-                <Header />
+                <HeaderContainer />
                 <Content />
                 <Footer />
             </div>
