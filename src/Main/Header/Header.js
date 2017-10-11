@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer, shell } = window.require('electron');
 
 class Header extends React.Component {
     constructor(props) {
@@ -26,6 +26,7 @@ class Header extends React.Component {
             container: {
                 width: 400,
                 height: 50,
+                borderBottom: '1px solid #d1d5da',
                 display: 'flex',
                 justifyContent: 'space-between',
             },
@@ -39,7 +40,7 @@ class Header extends React.Component {
             },
             tabItemHover: {
                 height: 50,
-                backgroundColor: '#d1d5da',
+                backgroundColor: '#f6f8fa',
                 cursor: 'pointer',
             },
             tabText: {
@@ -80,7 +81,7 @@ class Header extends React.Component {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#d1d5da',
+                backgroundColor: '#f6f8fa',
                 cursor: 'pointer',
             },
         }
@@ -143,6 +144,7 @@ class Header extends React.Component {
                 <div
                     className="header-btn-item"
                     style={this.state.hover === 'website' ? styles.btnItemHover : styles.btnItem}
+                    onClick={() => {shell.openExternal('www.baidu.com')}}
                     onMouseEnter={() => {this.setState({hover: 'website'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >

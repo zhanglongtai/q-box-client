@@ -30,7 +30,7 @@ const config = {
 	iconPath: '',
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
 	folderPath: 'C:\\Users\\Tiger\\Dropbox',
-	environment: 'dev', // 'dev' or 'prod'
+	environment: 'prod', // 'dev' or 'prod'
 	mainPosition: null,
 	tray: null,
 	menu: null,

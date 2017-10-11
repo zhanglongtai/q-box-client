@@ -1964,7 +1964,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _window$require = window.require('electron'),
-    ipcRenderer = _window$require.ipcRenderer;
+    ipcRenderer = _window$require.ipcRenderer,
+    shell = _window$require.shell;
 
 var Header = function (_React$Component) {
     _inherits(Header, _React$Component);
@@ -2001,6 +2002,7 @@ var Header = function (_React$Component) {
                 container: {
                     width: 400,
                     height: 50,
+                    borderBottom: '1px solid #d1d5da',
                     display: 'flex',
                     justifyContent: 'space-between'
                 },
@@ -2014,7 +2016,7 @@ var Header = function (_React$Component) {
                 },
                 tabItemHover: {
                     height: 50,
-                    backgroundColor: '#d1d5da',
+                    backgroundColor: '#f6f8fa',
                     cursor: 'pointer'
                 },
                 tabText: {
@@ -2055,7 +2057,7 @@ var Header = function (_React$Component) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: '#d1d5da',
+                    backgroundColor: '#f6f8fa',
                     cursor: 'pointer'
                 }
             };
@@ -2151,6 +2153,9 @@ var Header = function (_React$Component) {
                     {
                         className: 'header-btn-item',
                         style: this.state.hover === 'website' ? styles.btnItemHover : styles.btnItem,
+                        onClick: function onClick() {
+                            shell.openExternal('www.baidu.com');
+                        },
                         onMouseEnter: function onMouseEnter() {
                             _this2.setState({ hover: 'website' });
                         },
@@ -24088,9 +24093,22 @@ var Content = function (_React$Component) {
     _createClass(Content, [{
         key: 'render',
         value: function render() {
+            var styles = {
+                container: {
+                    width: 400,
+                    height: 498,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }
+            };
+
             return _react2.default.createElement(
                 'div',
-                null,
+                {
+                    className: 'content-container',
+                    style: styles.container
+                },
                 'Content'
             );
         }
@@ -24149,6 +24167,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var _window$require = window.require('electron'),
+    ipcRenderer = _window$require.ipcRenderer,
+    shell = _window$require.shell;
+
 var Footer = function (_React$Component) {
     _inherits(Footer, _React$Component);
 
@@ -24161,10 +24183,123 @@ var Footer = function (_React$Component) {
     _createClass(Footer, [{
         key: 'render',
         value: function render() {
+            var styles = {
+                container: {
+                    width: 400,
+                    height: 50,
+                    borderTop: '1px solid #d1d5da',
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                },
+                syncContainer: {
+                    height: 50,
+                    margin: '0 20px 0 20px',
+                    display: 'flex',
+                    alignItems: 'center'
+                },
+                syncIcon: {
+                    height: 50,
+                    width: 50,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                },
+                syncText: {
+                    margin: '0 10px 0 0',
+                    height: 50,
+                    lineHeight: '50px'
+                },
+                actionContainer: {
+                    margin: '0 20px 0 20px',
+                    height: 50,
+                    display: 'flex',
+                    alignItems: 'center'
+                },
+                actionIcon: {
+                    height: 50,
+                    width: 50,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                },
+                actionText: {
+                    margin: '0 10px 0 0',
+                    height: 50,
+                    lineHeight: '50px'
+                }
+            };
+
+            var sync = _react2.default.createElement(
+                'div',
+                {
+                    className: 'footer-sync-container',
+                    style: styles.syncContainer
+                },
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'footer-sync-icon',
+                        style: styles.syncIcon
+                    },
+                    _react2.default.createElement(
+                        'i',
+                        {
+                            className: 'material-icons .md-42'
+                        },
+                        'check'
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    {
+                        className: 'footer-sync-text',
+                        style: styles.syncText
+                    },
+                    '\u6700\u65B0'
+                )
+            );
+
+            var action = _react2.default.createElement(
+                'div',
+                {
+                    className: 'footer-action-container',
+                    style: styles.actionContainer,
+                    onClick: function onClick() {
+                        shell.openExternal('www.baidu.com');
+                    }
+                },
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'footer-action-icon',
+                        style: styles.actionIcon
+                    },
+                    _react2.default.createElement(
+                        'i',
+                        {
+                            className: 'material-icons .md-42'
+                        },
+                        'stars'
+                    )
+                ),
+                _react2.default.createElement(
+                    'p',
+                    {
+                        className: 'footer-action-text',
+                        style: styles.actionText
+                    },
+                    '\u5347\u7EA7'
+                )
+            );
+
             return _react2.default.createElement(
                 'div',
-                null,
-                'Footer'
+                {
+                    className: 'footer-container',
+                    style: styles.container
+                },
+                sync,
+                action
             );
         }
     }]);

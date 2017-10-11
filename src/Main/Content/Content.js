@@ -7,8 +7,21 @@ class Content extends React.Component {
     }
 
     render() {
+        const styles = {
+            container: {
+                width: 400,
+                height: 498,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+        }
+
         return (
-            <div>Content</div>
+            <div
+                className="content-container"
+                style={styles.container}
+            >Content</div>
         )
     }
 }
