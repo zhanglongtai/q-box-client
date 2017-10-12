@@ -29,12 +29,18 @@ const win = {
 const config = {
 	iconPath: '',
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
-	folderPath: 'C:\\Users\\Tiger\\Dropbox',
-	environment: 'prod', // 'dev' or 'prod'
+	folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
+	upgradeURL: 'www.baidu.com',
+	environment: 'dev', // 'dev' or 'prod'
 	mainPosition: null,
 	tray: null,
 	menu: null,
 	sync: true,
+}
+
+// util func
+function log() {
+    console.log.apply(null, arguments)
 }
 
 // ========== Tray ==========
@@ -65,7 +71,7 @@ function createTray() {
 	config.tray.on('right-click', handleClick)
 
 	config.tray.on('double-click', () => {
-		shell.showItemInFolder(config.folderPath)
+		shell.openItem(config.folderPath)
 	})
 }
 // ========== Tray ==========
@@ -118,13 +124,13 @@ function hideMain() {
 	}
 }
 
-ipcMain.on('main-header-settings-clicked', () => {
-	createMenu()
+ipcMain.on('main-header-settings-clicked', (event, position) => {
+	createMenu(position)
 })
 // ========== Main ==========
 
 // ========== Menu ==========
-function createMenu() {
+function createMenu(position) {
 	const template = [
 		{
 			label: '已使用 1%',
@@ -133,7 +139,7 @@ function createMenu() {
 		{
 			label: '获取更多空间',
 			click: () => {
-				shell.openExternal('https://baidu.com')
+				shell.openExternal(config.upgradeURL)
 			},
 			position: 'endof=2',
 		},
@@ -202,3 +208,54 @@ app.on('ready', () => {
 	createMain()
 	showMain()
 });
+
+// ========== fetch activity list ==========
+ipcMain.on('fetch-activity-list', (event) => {
+	const data = {
+		status: 1,
+		list: [
+			{
+				fileName: 'test.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: '比尔-盖茨《未来时速》.pdf',
+				actor: '您',
+				action: '添加',
+				actionTime: '2个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\比尔-盖茨《未来时速》.pdf',
+			},
+			{
+				fileName: 'HP洛夫克拉夫特 短篇集.txt',
+				actor: '您',
+				action: '添加',
+				actionTime: '4个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\HP洛夫克拉夫特 短篇集.txt',
+			},
+			{
+				fileName: 'Getting Started.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Getting Started.rtf',
+			},
+			{
+				fileName: 'How to use the Public folder.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Public\\How to use the Public folder.rtf',
+			},
+		],
+	}
+
+	event.sender.send('receive-activity-list', data)
+})

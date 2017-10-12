@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react"
+import PropTypes from "prop-types"
 
-class Content extends React.Component {
+class Inform extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -9,9 +9,9 @@ class Content extends React.Component {
     render() {
         const styles = {
             container: {
+                display: this.props.content === 'inform' ? 'flex' : 'none',
                 width: 400,
                 height: 498,
-                display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
             },
@@ -19,11 +19,15 @@ class Content extends React.Component {
 
         return (
             <div
-                className="content-container"
+                className="inform-container"
                 style={styles.container}
-            >Content</div>
+            >Inform</div>
         )
     }
 }
 
-export default Content
+Inform.propTypes = {
+    content: PropTypes.string.isRequired,
+}
+
+export default Inform

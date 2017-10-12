@@ -1,9 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types';
+import React from "react"
+import PropTypes from "prop-types"
 
-import { HeaderContainer } from './Header'
-import Content from './Content'
-import Footer from './Footer'
+import { HeaderContainer } from "./Header"
+import { ActivityContainer } from "./Activity"
+import { InformContainer } from "./Inform";
+import { FooterContainer } from "./Footer"
 
 class Main extends React.Component {
     constructor(props) {
@@ -24,8 +25,9 @@ class Main extends React.Component {
                 style={styles.container}
             >
                 <HeaderContainer />
-                <Content />
-                <Footer />
+                <InformContainer />
+                <ActivityContainer />
+                <FooterContainer />
             </div>
         )
     }

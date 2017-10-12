@@ -6,7 +6,9 @@ import Header from './Header'
 
 const mapStateToProps = (state) => {
 	return {
-        content: state.content,
+		content: state.content,
+		website: state.website,
+		folderPath: state.folderPath,
 	}
 }
 

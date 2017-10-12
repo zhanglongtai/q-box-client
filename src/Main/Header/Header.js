@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { log } from '../../utils'
 
-const { ipcRenderer, shell } = window.require('electron');
+const { ipcRenderer, shell } = window.require('electron')
 
 class Header extends React.Component {
     constructor(props) {
@@ -17,8 +18,19 @@ class Header extends React.Component {
         this.props.setContent(content)
     }
 
-    showMenu() {
-        ipcRenderer.send('main-header-settings-clicked')
+    showMenu(event) {
+        const position = {
+            x: event.screenX,
+            y: event.screenY,
+        }
+
+        // const h = event.currentTarget.clientHeight
+        // const w = event.currentTarget.clientWidth
+
+        // position.x += h / 2
+        // position.y += w / 2
+
+        ipcRenderer.send('main-header-settings-clicked', position)
     }
 
     render() {
@@ -74,6 +86,7 @@ class Header extends React.Component {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                position: 'relative',
             },
             btnItemHover: {
                 height: 50,
@@ -83,6 +96,40 @@ class Header extends React.Component {
                 justifyContent: 'center',
                 backgroundColor: '#f6f8fa',
                 cursor: 'pointer',
+                position: 'relative',
+            },
+            btnTooltip: {
+                display: 'none',
+                height: 20,
+                minWidth: 50,
+                width: 80,
+                maxWidth: 100,
+                lineHeight: '20px',
+                textAlign: 'center',
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+                border: '1px solid',
+                fontSize: 12,
+                zIndex: 10,
+                backgroundColor: 'white',
+                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px',
+            },
+            btnTooltipHover: {
+                height: 20,
+                minWidth: 50,
+                width: 80,
+                maxWidth: 100,
+                lineHeight: '20px',
+                textAlign: 'center',
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+                border: '1px solid',
+                fontSize: 12,
+                zIndex: 10,
+                backgroundColor: 'white',
+                boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 6px',
             },
         }
 
@@ -131,27 +178,39 @@ class Header extends React.Component {
                 className="header-btns-container"
                 style={styles.btnsContainer}
             >
+                {/* folder action */}
                 <div
                     className="header-btn-item"
                     style={this.state.hover === 'folder' ? styles.btnItemHover : styles.btnItem}
+                    onClick={() => {shell.openItem(this.props.folderPath)}}
                     onMouseEnter={() => {this.setState({hover: 'folder'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
                     <i
                         className="material-icons .md-42"
                     >folder_open</i>
+                    <p
+                        className="header-btn-item-tooltip"
+                        style={this.state.hover === 'folder' ? styles.btnTooltipHover : styles.btnTooltip}
+                    >打开文件夹</p>
                 </div>
+                {/* website action */}
                 <div
                     className="header-btn-item"
                     style={this.state.hover === 'website' ? styles.btnItemHover : styles.btnItem}
-                    onClick={() => {shell.openExternal('www.baidu.com')}}
+                    onClick={() => {shell.openExternal(this.props.website)}}
                     onMouseEnter={() => {this.setState({hover: 'website'})}}
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
                     <i
                         className="material-icons .md-42"
                     >home</i>
+                    <p
+                        className="header-btn-item-tooltip"
+                        style={this.state.hover === 'website' ? styles.btnTooltipHover : styles.btnTooltip}
+                    >访问个人主页</p>
                 </div>
+                {/* settings action */}
                 <div
                     className="header-btn-item"
                     style={this.state.hover === 'settings' ? styles.btnItemHover : styles.btnItem}
@@ -162,6 +221,10 @@ class Header extends React.Component {
                     <i
                         className="material-icons .md-42"
                     >settings</i>
+                    <p
+                        className="header-btn-item-tooltip"
+                        style={this.state.hover === 'settings' ? styles.btnTooltipHover : styles.btnTooltip}
+                    >设置</p>
                 </div>
             </div>
         )
@@ -180,6 +243,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
     content: PropTypes.string.isRequired,
+    website: PropTypes.string.isRequired,
+    folderPath: PropTypes.string.isRequired,
 }
 
 export default Header

@@ -6,6 +6,9 @@ const { ipcRenderer, shell } = window.require('electron')
 class Footer extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            hover: '', // 'sync', 'action'
+        }
     }
 
     render() {
@@ -19,9 +22,17 @@ class Footer extends React.Component {
             },
             syncContainer: {
                 height: 50,
-                margin: '0 20px 0 20px',
+                margin: '0 10px 0 20px',
                 display: 'flex',
                 alignItems: 'center',
+            },
+            syncContainerHover: {
+                height: 50,
+                margin: '0 10px 0 20px',
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#f6f8fa',
+                cursor: 'pointer',
             },
             syncIcon: {
                 height: 50,
@@ -41,6 +52,14 @@ class Footer extends React.Component {
                 display: 'flex',
                 alignItems: 'center',
             },
+            actionContainerHover: {
+                margin: '0 20px 0 20px',
+                height: 50,
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#f6f8fa',
+                cursor: 'pointer',
+            },
             actionIcon: {
                 height: 50,
                 width: 50,
@@ -58,7 +77,9 @@ class Footer extends React.Component {
         const sync = (
             <div
                 className="footer-sync-container"
-                style={styles.syncContainer}
+                style={this.state.hover === 'sync' ? styles.syncContainerHover : styles.syncContainer}
+                onMouseEnter={() => {this.setState({hover: 'sync'})}}
+                onMouseLeave={() => {this.setState({hover: ''})}}
             >
                 <div
                     className="footer-sync-icon"
@@ -78,8 +99,10 @@ class Footer extends React.Component {
         const action = (
             <div
                 className="footer-action-container"
-                style={styles.actionContainer}
-                onClick={() => {shell.openExternal('www.baidu.com')}}
+                style={this.state.hover === 'action' ? styles.actionContainerHover : styles.actionContainer}
+                onClick={() => {shell.openExternal(this.props.website)}}
+                onMouseEnter={() => {this.setState({hover: 'action'})}}
+                onMouseLeave={() => {this.setState({hover: ''})}}
             >
                 <div
                     className="footer-action-icon"
@@ -106,6 +129,10 @@ class Footer extends React.Component {
             </div>
         )
     }
+}
+
+Footer.propTypes = {
+    website: PropTypes.string.isRequired,
 }
 
 export default Footer

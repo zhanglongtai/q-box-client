@@ -9,6 +9,16 @@ function content(state = mainInitialState.content, action) {
     }
 }
 
+function website(state = mainInitialState.website) {
+    return state
+}
+
+function folderPath(state = mainInitialState.folderPath) {
+    return state
+}
+
 export {
     content,
+    website,
+    folderPath,
 }
