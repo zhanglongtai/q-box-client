@@ -187,7 +187,10 @@ class Header extends React.Component {
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
                     <i
-                        className="material-icons .md-42"
+                        className="material-icons"
+                        style={{
+                            fontSize: 24,
+                        }}
                     >folder_open</i>
                     <p
                         className="header-btn-item-tooltip"
@@ -203,7 +206,10 @@ class Header extends React.Component {
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
                     <i
-                        className="material-icons .md-42"
+                        className="material-icons"
+                        style={{
+                            fontSize: 24,
+                        }}
                     >home</i>
                     <p
                         className="header-btn-item-tooltip"
@@ -219,7 +225,10 @@ class Header extends React.Component {
                     onMouseLeave={() => {this.setState({hover: ''})}}
                 >
                     <i
-                        className="material-icons .md-42"
+                        className="material-icons"
+                        style={{
+                            fontSize: 24,
+                        }}
                     >settings</i>
                     <p
                         className="header-btn-item-tooltip"

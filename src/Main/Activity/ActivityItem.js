@@ -111,7 +111,12 @@ class ActivityItem extends React.Component {
                     className="activity-item-icon-container"
                     style={styles.iconContainer}
                 >
-                    <i className="material-icons .md-42">insert_drive_file</i>
+                    <i
+                        className="material-icons"
+                        style={{
+                            fontSize: 32,
+                        }}
+                    >insert_drive_file</i>
                 </div>
                 <div
                     className="activity-item-info-container"

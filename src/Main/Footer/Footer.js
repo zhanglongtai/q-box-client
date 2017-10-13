@@ -22,13 +22,13 @@ class Footer extends React.Component {
             },
             syncContainer: {
                 height: 50,
-                margin: '0 10px 0 20px',
+                margin: '0 10px 0 0',
                 display: 'flex',
                 alignItems: 'center',
             },
             syncContainerHover: {
                 height: 50,
-                margin: '0 10px 0 20px',
+                margin: '0 0 0 10px',
                 display: 'flex',
                 alignItems: 'center',
                 backgroundColor: '#f6f8fa',
@@ -74,27 +74,110 @@ class Footer extends React.Component {
             },
         }
 
-        const sync = (
-            <div
-                className="footer-sync-container"
-                style={this.state.hover === 'sync' ? styles.syncContainerHover : styles.syncContainer}
-                onMouseEnter={() => {this.setState({hover: 'sync'})}}
-                onMouseLeave={() => {this.setState({hover: ''})}}
-            >
-                <div
-                    className="footer-sync-icon"
-                    style={styles.syncIcon}
-                >
-                    <i
-                        className="material-icons .md-42"
-                    >check</i>
-                </div>
-                <p
-                    className="footer-sync-text"
-                    style={styles.syncText}
-                >最新</p>
-            </div>
-        )
+        let sync = null
+        if (this.props.sync) {
+            if (this.state.hover === 'sync') {
+                sync = (
+                    <div
+                        className="footer-sync-container"
+                        style={styles.syncContainerHover}
+                        onMouseLeave={() => {this.setState({hover: ''})}}
+                        onClick={() => {this.props.setSync(!this.props.sync)}}
+                    >
+                        <div
+                            className="footer-sync-icon"
+                            style={styles.syncIcon}
+                        >
+                            <i
+                                className="material-icons"
+                                style={{
+                                    fontSize: 24,
+                                }}
+                            >pause</i>
+                        </div>
+                        <p
+                            className="footer-sync-text"
+                            style={styles.syncText}
+                        >暂停同步</p>
+                    </div>
+                )
+            } else {
+                sync = (
+                    <div
+                        className="footer-sync-container"
+                        style={styles.syncContainer}
+                        onMouseEnter={() => {this.setState({hover: 'sync'})}}
+                    >
+                        <div
+                            className="footer-sync-icon"
+                            style={styles.syncIcon}
+                        >
+                            <i
+                                className="material-icons"
+                                style={{
+                                    fontSize: 24,
+                                }}
+                            >check</i>
+                        </div>
+                        <p
+                            className="footer-sync-text"
+                            style={styles.syncText}
+                        >最新</p>
+                    </div>
+                )
+            }
+        } else {
+            if (this.state.hover === 'sync') {
+                sync = (
+                    <div
+                        className="footer-sync-container"
+                        style={styles.syncContainerHover}
+                        onMouseLeave={() => {this.setState({hover: ''})}}
+                        onClick={() => {this.props.setSync(!this.props.sync)}}
+                    >
+                        <div
+                            className="footer-sync-icon"
+                            style={styles.syncIcon}
+                        >
+                            <i
+                                className="material-icons"
+                                style={{
+                                    fontSize: 24,
+                                }}
+                            >cached</i>
+                        </div>
+                        <p
+                            className="footer-sync-text"
+                            style={styles.syncText}
+                        >继续同步</p>
+                    </div>
+                )
+            } else {
+                sync = (
+                    <div
+                        className="footer-sync-container"
+                        style={styles.syncContainer}
+                        onMouseEnter={() => {this.setState({hover: 'sync'})}}
+                    >
+                        <div
+                            className="footer-sync-icon"
+                            style={styles.syncIcon}
+                        >
+                            <i
+                                className="material-icons"
+                                style={{
+                                    fontSize: 24,
+                                }}
+                            >pause</i>
+                        </div>
+                        <p
+                            className="footer-sync-text"
+                            style={styles.syncText}
+                        >同步已暂停</p>
+                    </div>
+                )
+            }
+        }
 
         const action = (
             <div
@@ -109,7 +192,10 @@ class Footer extends React.Component {
                     style={styles.actionIcon}
                 >
                     <i
-                        className="material-icons .md-42"
+                        className="material-icons"
+                        style={{
+                            fontSize: 24,
+                        }}
                     >stars</i>
                 </div>
                 <p
@@ -133,6 +219,8 @@ class Footer extends React.Component {
 
 Footer.propTypes = {
     website: PropTypes.string.isRequired,
+    sync: PropTypes.bool.isRequired,
+    setSync: PropTypes.func.isRequired,
 }
 
 export default Footer

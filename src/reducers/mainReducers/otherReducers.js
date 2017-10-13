@@ -17,8 +17,18 @@ function folderPath(state = mainInitialState.folderPath) {
     return state
 }
 
+function sync(state = mainInitialState.sync, action) {
+    switch(action.type) {
+        case 'SET_SYNC':
+            return action.sync
+        default:
+            return state
+    }
+}
+
 export {
     content,
     website,
     folderPath,
+    sync,
 }

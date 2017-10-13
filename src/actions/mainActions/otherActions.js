@@ -5,6 +5,14 @@ function setContent(content) {
     }
 }
 
+function setSync(bool) {
+    return {
+        type: 'SET_SYNC',
+        sync: bool,
+    }
+}
+
 export {
     setContent,
+    setSync,
 }

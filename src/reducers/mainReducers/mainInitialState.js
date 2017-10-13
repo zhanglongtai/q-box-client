@@ -12,6 +12,7 @@ const mainInitailState = {
 		list: [],
     },
     content: 'inform', // 'inform' or 'recentActivity'
+    sync: true,
     website: 'www.baidu.com',
     folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
 }
