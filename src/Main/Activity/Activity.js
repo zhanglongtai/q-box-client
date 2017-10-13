@@ -14,6 +14,10 @@ import { log } from "../../utils";
     }
 */
 
+// function scrollOn() {
+
+// }
+
 class Activity extends React.Component {
     constructor(props) {
         super(props)
@@ -37,6 +41,20 @@ class Activity extends React.Component {
                 flexDirection: 'column',
                 alignItems: 'center',
                 overflowY: 'auto',
+                overflowX: 'hidden',
+            },
+            msgContainer: {
+                width: 400,
+                height: 498,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+            iconContainer: {
+                width: 200,
+                height: 200,
+                margin: '0 0 20px 0',
             },
         }
 
@@ -73,7 +91,18 @@ class Activity extends React.Component {
                 )
             } else {
                 content = (
-                    <div className="activity-msg">获取失败</div>
+                    <div
+                        className="activity-msg"
+                        style={styles.msgContainer}
+                    >
+                        <div
+                            className="activity-msg-icon-container"
+                            style={styles.iconContainer}
+                        >
+                            <i className="material-icons .md-180">info_outline</i>
+                        </div>
+                        <p>获取失败</p>
+                    </div>
                 )
             }
         }

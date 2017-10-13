@@ -2402,6 +2402,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }
 */
 
+// function scrollOn() {
+
+// }
+
 var Activity = function (_React$Component) {
     _inherits(Activity, _React$Component);
 
@@ -2431,7 +2435,21 @@ var Activity = function (_React$Component) {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    overflowY: 'auto'
+                    overflowY: 'auto',
+                    overflowX: 'hidden'
+                },
+                msgContainer: {
+                    width: 400,
+                    height: 498,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                },
+                iconContainer: {
+                    width: 200,
+                    height: 200,
+                    margin: '0 0 20px 0'
                 }
             };
 
@@ -2465,8 +2483,27 @@ var Activity = function (_React$Component) {
                 } else {
                     content = _react2.default.createElement(
                         'div',
-                        { className: 'activity-msg' },
-                        '\u83B7\u53D6\u5931\u8D25'
+                        {
+                            className: 'activity-msg',
+                            style: styles.msgContainer
+                        },
+                        _react2.default.createElement(
+                            'div',
+                            {
+                                className: 'activity-msg-icon-container',
+                                style: styles.iconContainer
+                            },
+                            _react2.default.createElement(
+                                'i',
+                                { className: 'material-icons .md-180' },
+                                'info_outline'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            '\u83B7\u53D6\u5931\u8D25'
+                        )
                     );
                 }
             }
@@ -24767,14 +24804,16 @@ var ActivityItem = function (_React$Component) {
 
             var styles = {
                 container: {
-                    width: 400,
-                    height: 60,
+                    maxWidth: 400,
+                    width: '100%',
+                    minHeight: 60,
                     display: 'flex',
                     position: 'relative'
                 },
                 containerHover: {
-                    width: 400,
-                    height: 60,
+                    maxWidth: 400,
+                    width: '100%',
+                    minHeight: 60,
                     display: 'flex',
                     position: 'relative',
                     backgroundColor: '#bbc0c5'
@@ -24788,6 +24827,7 @@ var ActivityItem = function (_React$Component) {
                 },
                 infoContainer: {
                     height: 60,
+                    width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     cursor: 'default',
@@ -24795,6 +24835,7 @@ var ActivityItem = function (_React$Component) {
                 },
                 fileName: {
                     height: 30,
+                    maxWidth: 300,
                     lineHeight: '35px',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',

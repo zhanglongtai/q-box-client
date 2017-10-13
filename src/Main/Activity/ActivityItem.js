@@ -23,14 +23,16 @@ class ActivityItem extends React.Component {
     render() {
         const styles = {
             container: {
-                width: 400,
-                height: 60,
+                maxWidth: 400,
+                width: '100%',
+                minHeight: 60,
                 display: 'flex',
                 position: 'relative',
             },
             containerHover: {
-                width: 400,
-                height: 60,
+                maxWidth: 400,
+                width: '100%',
+                minHeight: 60,
                 display: 'flex',
                 position: 'relative',
                 backgroundColor: '#bbc0c5',
@@ -44,6 +46,7 @@ class ActivityItem extends React.Component {
             },
             infoContainer: {
                 height: 60,
+                width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 cursor: 'default',
@@ -51,6 +54,7 @@ class ActivityItem extends React.Component {
             },
             fileName: {
                 height: 30,
+                maxWidth: 300,
                 lineHeight: '35px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
