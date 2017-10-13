@@ -2,40 +2,40 @@ import { log } from "../../utils";
 
 const { ipcRenderer } = window.require('electron')
 
-function requestActivityList() {
+function requestActivity() {
     return {
-        type: 'REQUEST_ACTIVITY_LIST',
+        type: 'REQUEST_ACTIVITY',
     }
 }
 
-function receiveActivityList(data) {
+function receiveActivity(data) {
     return {
-        type: 'RECEIVE_ACTIVITY_LIST',
+        type: 'RECEIVE_ACTIVITY',
         list: data.list,
     }
 }
 
-function invalidActivityList(data) {
+function invalidActivity(data) {
     return {
-        type: 'INVALID_ACTIVITY_LIST',
+        type: 'INVALID_ACTIVITY',
         errMsg: data.errMsg,
     }
 }
 
-function activityList() {
+function fetchActivity() {
     return (dispatch) => {
-        dispatch(requestActivityList())
+        dispatch(requestActivity())
         ipcRenderer.send('fetch-activity-list')
         ipcRenderer.on('receive-activity-list', (event, data) => {
             if (data.status === 1) {
-                dispatch(receiveActivityList(data))
+                dispatch(receiveActivity(data))
             } else {
-                dispatch(invalidActivityList(data))
+                dispatch(invalidActivity(data))
             }
         })
     }
 }
 
 export {
-    activityList,
+    fetchActivity,
 }

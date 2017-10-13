@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {
-    activityList,
+    fetchActivity,
 } from '../../actions/mainActions'
 import Activity from './Activity'
 
@@ -16,8 +16,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		activityList: () => {
-			dispatch(activityList())
+		fetchActivity: () => {
+			dispatch(fetchActivity())
 		},
 	}
 }
@@ -25,6 +25,6 @@ const mapDispatchToProps = (dispatch) => {
 const ActivityContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Activity);
+)(Activity)
 
-export default ActivityContainer;
+export default ActivityContainer

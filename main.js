@@ -31,7 +31,7 @@ const config = {
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
 	folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
 	upgradeURL: 'www.baidu.com',
-	environment: 'prod', // 'dev' or 'prod'
+	environment: 'dev', // 'dev' or 'prod'
 	mainPosition: null,
 	tray: null,
 	menu: null,
@@ -210,144 +210,154 @@ app.on('ready', () => {
 });
 
 // ========== fetch activity list ==========
-function createScrollList() {
-    const list = [
-		{
-			fileName: 'loooooooooooooooooooooooooooooooooooong file name test.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: 'test5.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: 'test4.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: 'test3.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: 'test2.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: 'test.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: '比尔-盖茨《未来时速》.pdf',
-			actor: '您',
-			action: '添加',
-			actionTime: '2个月前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\比尔-盖茨《未来时速》.pdf',
-		},
-		{
-			fileName: 'HP洛夫克拉夫特 短篇集.txt',
-			actor: '您',
-			action: '添加',
-			actionTime: '4个月前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\HP洛夫克拉夫特 短篇集.txt',
-		},
-		{
-			fileName: 'Getting Started.rtf',
-			actor: 'Q-box 团队',
-			action: '添加',
-			actionTime: '2年前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\Getting Started.rtf',
-		},
-		{
-			fileName: 'How to use the Public folder.rtf',
-			actor: 'Q-box 团队',
-			action: '添加',
-			actionTime: '2年前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\Public\\How to use the Public folder.rtf',
-		},
-	]
-
-	return list
-}
-
-function createNotScrollList() {
-    const list = [
-		{
-			fileName: 'test.txt',
-			actor: '您',
-			action: '更改',
-			actionTime: '2天前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
-		},
-		{
-			fileName: '比尔-盖茨《未来时速》.pdf',
-			actor: '您',
-			action: '添加',
-			actionTime: '2个月前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\比尔-盖茨《未来时速》.pdf',
-		},
-		{
-			fileName: 'HP洛夫克拉夫特 短篇集.txt',
-			actor: '您',
-			action: '添加',
-			actionTime: '4个月前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\HP洛夫克拉夫特 短篇集.txt',
-		},
-		{
-			fileName: 'Getting Started.rtf',
-			actor: 'Q-box 团队',
-			action: '添加',
-			actionTime: '2年前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\Getting Started.rtf',
-		},
-		{
-			fileName: 'How to use the Public folder.rtf',
-			actor: 'Q-box 团队',
-			action: '添加',
-			actionTime: '2年前',
-			fileURL: 'https://electron.atom.io/docs/api/clipboard/',
-			filePath: 'C:\\Users\\Tiger\\Dropbox\\Public\\How to use the Public folder.rtf',
-		},
-	]
-
-	return list
-}
-
 ipcMain.on('fetch-activity-list', (event) => {
+	function createScrollList() {
+		const list = [
+			{
+				fileName: 'loooooooooooooooooooooooooooooooooooong file name test.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: 'test5.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: 'test4.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: 'test3.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: 'test2.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: 'test.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: '比尔-盖茨《未来时速》.pdf',
+				actor: '您',
+				action: '添加',
+				actionTime: '2个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\比尔-盖茨《未来时速》.pdf',
+			},
+			{
+				fileName: 'HP洛夫克拉夫特 短篇集.txt',
+				actor: '您',
+				action: '添加',
+				actionTime: '4个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\HP洛夫克拉夫特 短篇集.txt',
+			},
+			{
+				fileName: 'Getting Started.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Getting Started.rtf',
+			},
+			{
+				fileName: 'How to use the Public folder.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Public\\How to use the Public folder.rtf',
+			},
+		]
+	
+		return list
+	}
+	
+	function createNotScrollList() {
+		const list = [
+			{
+				fileName: 'test.txt',
+				actor: '您',
+				action: '更改',
+				actionTime: '2天前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\test.txt',
+			},
+			{
+				fileName: '比尔-盖茨《未来时速》.pdf',
+				actor: '您',
+				action: '添加',
+				actionTime: '2个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\比尔-盖茨《未来时速》.pdf',
+			},
+			{
+				fileName: 'HP洛夫克拉夫特 短篇集.txt',
+				actor: '您',
+				action: '添加',
+				actionTime: '4个月前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\HP洛夫克拉夫特 短篇集.txt',
+			},
+			{
+				fileName: 'Getting Started.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Getting Started.rtf',
+			},
+			{
+				fileName: 'How to use the Public folder.rtf',
+				actor: 'Q-box 团队',
+				action: '添加',
+				actionTime: '2年前',
+				fileURL: 'https://electron.atom.io/docs/api/clipboard/',
+				filePath: 'C:\\Users\\Tiger\\Dropbox\\Public\\How to use the Public folder.rtf',
+			},
+		]
+	
+		return list
+	}
+	
+	function createEmptyList() {
+		return []
+	}
+	
+	const mockList = {
+		emptyList: createEmptyList(),
+		notScrollList: createNotScrollList(),
+		scrollList: createScrollList(),
+	}
+
 	const data = {
 		status: 1,
-		list: createScrollList(),
+		list: mockList.scrollList,
 	}
 
 	event.sender.send('receive-activity-list', data)

@@ -1,22 +1,22 @@
 import mainInitialState from './mainInitialState';
 
-function recentActivity(state = mainInitialState.recentActivity, action) {
+function inform(state = mainInitialState.recentActivity, action) {
     switch(action.type) {
-        case 'REQUEST_ACTIVITY':
+        case 'REQUEST_INFORM':
 		    return Object.assign({}, state, {
                 isFetching: true,
                 receiveSuccess: false,
                 errMsg: '',
                 list: [],
 		    });
-        case 'RECEIVE_ACTIVITY':
+        case 'RECEIVE_INFORM':
             return Object.assign({}, state, {
                 isFetching: false,
                 receiveSuccess: true,
                 errMsg: '',
                 list: action.list,
             });
-        case 'INVALID_ACTIVITY':
+        case 'INVALID_INFORM':
             return Object.assign({}, state, {
                 isFetching: false,
                 receiveSuccess: false,
@@ -28,4 +28,4 @@ function recentActivity(state = mainInitialState.recentActivity, action) {
     }
 }
 
-export default recentActivity;
+export default inform;

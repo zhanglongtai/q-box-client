@@ -1,7 +1,9 @@
 import { setContent } from './otherActions'
-import { activityList } from './activityActions'
+import { fetchActivity } from './activityActions'
+import { fetchInform } from "./informActions";
 
 export {
     setContent,
-    activityList,
+    fetchActivity,
+    fetchInform,
 }
