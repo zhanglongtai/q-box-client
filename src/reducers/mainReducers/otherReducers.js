@@ -1,4 +1,4 @@
-import mainInitialState from './mainInitialState';
+import mainInitialState from "./mainInitialState"
 
 function content(state = mainInitialState.content, action) {
     switch(action.type) {

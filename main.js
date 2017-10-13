@@ -22,7 +22,8 @@ switch (process.platform) {
 // win pool for client
 const win = {
     winLogin: null,
-    winMain: null,
+	winMain: null,
+	winSettings: null,
 }
 
 // app config
@@ -31,7 +32,7 @@ const config = {
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
 	folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
 	upgradeURL: 'www.baidu.com',
-	environment: 'dev', // 'dev' or 'prod'
+	environment: 'prod', // 'dev' or 'prod'
 	mainPosition: null,
 	tray: null,
 	menu: null,
@@ -157,6 +158,9 @@ function createMenu(position) {
 		},
 		{
 			label: '首选项',
+			click: () => {
+				createSettings()
+			},
 			position: 'endof=4',
 		},
 		{
@@ -197,6 +201,37 @@ function createLogin() {
 	})
 }
 // ========== Login ==========
+
+// ========== Settings ==========
+function createSettings() {
+	const options = {
+		width: 400,
+		height: 400,
+		show: false,
+		icon: config.iconPath,
+	}
+	win.winSettings = new BrowserWindow(options)
+
+	// don't display menu
+	win.winSettings.setMenuBarVisibility(false)
+
+	if (config.environment === 'dev') {
+		win.winSettings.webContents.openDevTools()
+	}
+
+	win.winSettings.loadURL(`file://${__dirname}/renderer/settings.html`)
+	
+	win.winSettings.once('ready-to-show', () => {
+		win.winSettings.show()
+	})
+}
+
+function closeSettings() {
+	if (win.winSettings !== null) {
+		win.winSettings.close()
+	}
+}
+// ========== Settings ==========
 
 app.on('ready', () => {
 	if (config.environment === 'dev') {
@@ -362,3 +397,4 @@ ipcMain.on('fetch-activity-list', (event) => {
 
 	event.sender.send('receive-activity-list', data)
 })
+// ========== fetch activity list ==========

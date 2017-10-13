@@ -1,4 +1,4 @@
-import mainInitialState from './mainInitialState';
+import mainInitialState from "./mainInitialState"
 
 function inform(state = mainInitialState.recentActivity, action) {
     switch(action.type) {

@@ -1,0 +1,54 @@
+import React from "react"
+import PropTypes from "prop-types"
+import { HeaderTabsContainer } from "./HeaderTabs";
+import {
+    AccountContainer,
+    BandwidthContainer,
+    GeneralContainer,
+    ProxyContainer,
+    SyncContainer,
+} from "./Content";
+import { log } from "../utils"
+
+class Settings extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        const styles = {
+            container: {
+                width: 400,
+                height: 400,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+        }
+
+        const content = {
+            general: <GeneralContainer />,
+            account: <AccountContainer />,
+            bandwidth: <BandwidthContainer />,
+            proxy: <ProxyContainer />,
+            sync: <SyncContainer />,
+        }
+
+            // <div
+            //     className="settings-container"
+            //     style={styles.container}
+            // >
+            //     <HeaderTabsContainer />
+            //     {content[this.props.content]}
+            // </div>
+        return (
+            <div>Settings</div>
+        )
+    }
+}
+
+Settings.propTypes = {
+    content: PropTypes.string.isRequired,
+}
+
+export default Settings

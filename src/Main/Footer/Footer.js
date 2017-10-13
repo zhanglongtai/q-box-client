@@ -28,7 +28,7 @@ class Footer extends React.Component {
             },
             syncContainerHover: {
                 height: 50,
-                margin: '0 0 0 10px',
+                margin: '0 10px 0 0',
                 display: 'flex',
                 alignItems: 'center',
                 backgroundColor: '#f6f8fa',
@@ -47,13 +47,13 @@ class Footer extends React.Component {
                 lineHeight: '50px',
             },
             actionContainer: {
-                margin: '0 20px 0 20px',
+                margin: '0 0 0 20px',
                 height: 50,
                 display: 'flex',
                 alignItems: 'center',
             },
             actionContainerHover: {
-                margin: '0 20px 0 20px',
+                margin: '0 0 0 20px',
                 height: 50,
                 display: 'flex',
                 alignItems: 'center',

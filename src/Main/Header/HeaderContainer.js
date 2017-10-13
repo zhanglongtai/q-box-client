@@ -1,8 +1,8 @@
-import { connect } from 'react-redux'
+import { connect } from "react-redux"
 import {
     setContent,
-} from '../../actions/mainActions'
-import Header from './Header'
+} from "../../actions/mainActions"
+import Header from "./Header"
 
 const mapStateToProps = (state) => {
 	return {
@@ -23,6 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 const HeaderContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header);
+)(Header)
 
-export default HeaderContainer;
+export default HeaderContainer

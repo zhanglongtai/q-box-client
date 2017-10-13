@@ -1,2 +1,2 @@
-import mainReducers from './mainReducers';
+import mainReducers from "./mainReducers"
 export default mainReducers;

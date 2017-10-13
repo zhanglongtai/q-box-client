@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
+import { connect } from "react-redux"
 import { setSync } from "../../actions/mainActions";
-import Footer from './Footer'
+import Footer from "./Footer"
 
 const mapStateToProps = (state) => {
 	return {
@@ -20,6 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 const FooterContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Footer);
+)(Footer)
 
-export default FooterContainer;
+export default FooterContainer
