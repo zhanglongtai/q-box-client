@@ -1,4 +1,5 @@
 import { connect } from "react-redux"
+import { setLaunchAtLogin } from "../../../actions/settingsActions/index";
 import General from "./General"
 
 const mapStateToProps = (state) => {
@@ -7,17 +8,17 @@ const mapStateToProps = (state) => {
 	}
 }
 
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		setContent: (content) => {
-// 			dispatch(setContent(content))
-// 		},
-// 	}
-// }
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setLaunchAtLogin: (bool) => {
+			dispatch(setLaunchAtLogin(bool))
+		},
+	}
+}
 
 const GeneralContainer = connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(General)
 
 export default GeneralContainer

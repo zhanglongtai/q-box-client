@@ -10,12 +10,23 @@ class HeaderTabItem extends React.Component {
     render() {
         const styles = {
             container: {
-                width: 50,
+                width: 60,
                 height: 70,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
+                cursor: 'pointer',
+            },
+            containerSelected: {
+                width: 60,
+                height: 70,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                backgroundColor: '#d2d7dc',
             },
             iconContainer: {
                 width: 42,
@@ -36,7 +47,7 @@ class HeaderTabItem extends React.Component {
         return (
             <div
                 className="header-tab-item-container"
-                style={styles.container}
+                style={this.props.selected ? styles.containerSelected : styles.container}
                 onClick={this.props.setContent.bind(null, this.props.name)}
             >
                 <div
@@ -66,6 +77,7 @@ HeaderTabItem.propTypes = {
     title: PropTypes.string.isRequired,
     imgURL: PropTypes.string.isRequired,
     setContent: PropTypes.func.isRequired,
+    selected: PropTypes.bool.isRequired,
 }
 
 export default HeaderTabItem

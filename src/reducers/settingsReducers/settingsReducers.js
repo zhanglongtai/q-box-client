@@ -1,9 +1,11 @@
 import { combineReducers } from "redux"
+import { 
+    general,
+    generalTemp,
+ } from "./generalReducers"
 import {
     content,
     contentList,
-    general,
-    generalTemp,
     account,
     accountTemp,
     bandwidth,

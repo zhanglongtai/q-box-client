@@ -1,4 +1,4 @@
-import settingsInitialState from './settingsInitialState';
+import settingsInitialState from "./settingsInitialState"
 
 function content(state = settingsInitialState.content, action) {
     switch(action.type) {
@@ -13,12 +13,7 @@ function contentList(state = settingsInitialState.contentList) {
     return state
 }
 
-function general(state = settingsInitialState.general) {
-    return state
-}
-function generalTemp(state = settingsInitialState.generalTemp) {
-    return state
-}
+
 
 function account(state = settingsInitialState.account) {
     return state
@@ -51,8 +46,6 @@ function syncTemp(state = settingsInitialState.syncTemp) {
 export {
     content,
     contentList,
-    general,
-    generalTemp,
     account,
     accountTemp,
     bandwidth,

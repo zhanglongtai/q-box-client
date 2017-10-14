@@ -34,6 +34,7 @@ class HeaderTabs extends React.Component {
                             title={item.title}
                             imgURL={item.imgURL}
                             setContent={this.props.setContent}
+                            selected={this.props.content === item.name}
                         />
                     )
                 })}

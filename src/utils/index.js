@@ -1,7 +1,7 @@
-function log() {
-    console.log.apply(null, arguments)
-}
+import log from "./log"
+import objectDeepMerge from "./objectDeepMerge"
 
 export {
-    log
+    log,
+    objectDeepMerge,
 }

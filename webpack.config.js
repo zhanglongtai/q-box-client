@@ -3,6 +3,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     main: './src/mainIndex.js',
+    settings: './src/settingsIndex.js',
   },
   
   output: {
