@@ -7,21 +7,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		setContent: (content) => {
-// 			dispatch(setContent(content))
-// 		},
-// 	}
-// }
-
 const SettingsContainer = connect(
     mapStateToProps,
     null
 )(Settings)
-
-function TestComponent() {
-    return <h1>Hello, {props.name}</h1>;
-}
 
 export default SettingsContainer

@@ -18,15 +18,15 @@ class HeaderTabItem extends React.Component {
                 justifyContent: 'center',
             },
             iconContainer: {
-                width: 32,
-                height: 32,
+                width: 42,
+                height: 42,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
             },
             textContainer: {
                 width: '100%',
-                height: 8,
+                height: 20,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -37,6 +37,7 @@ class HeaderTabItem extends React.Component {
             <div
                 className="header-tab-item-container"
                 style={styles.container}
+                onClick={this.props.setContent.bind(null, this.props.name)}
             >
                 <div
                     className="header-tab-item-icon-container"
@@ -45,14 +46,15 @@ class HeaderTabItem extends React.Component {
                     <i
                         className="material-icons"
                         style={{
-                            fontSize: 30,
+                            fontSize: 40,
                         }}
                     >{this.props.imgURL}</i>
                 </div>
                 <div
                     className="header-tab-item-text-container"
+                    style={styles.textContainer}
                 >
-                    <p>{this.props.title}</p>
+                    <p style={{margin: 0}}>{this.props.title}</p>
                 </div>
             </div>
         )
@@ -60,6 +62,7 @@ class HeaderTabItem extends React.Component {
 }
 
 HeaderTabItem.propTypes = {
+    name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     imgURL: PropTypes.string.isRequired,
     setContent: PropTypes.func.isRequired,

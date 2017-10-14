@@ -34,15 +34,14 @@ class Settings extends React.Component {
             sync: <SyncContainer />,
         }
 
-            // <div
-            //     className="settings-container"
-            //     style={styles.container}
-            // >
-            //     <HeaderTabsContainer />
-            //     {content[this.props.content]}
-            // </div>
         return (
-            <div>Settings</div>
+            <div
+                className="settings-container"
+                style={styles.container}
+            >
+                <HeaderTabsContainer />
+                {content[this.props.content]}
+            </div>
         )
     }
 }

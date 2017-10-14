@@ -6,7 +6,6 @@ import HeaderTabs from "./HeaderTabs"
 import { log } from "../../utils"
 
 const mapStateToProps = (state) => {
-	log('state', state)
 	return {
         content: state.content,
         contentList: state.contentList,

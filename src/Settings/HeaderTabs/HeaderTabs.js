@@ -11,13 +11,13 @@ class HeaderTabs extends React.Component {
     render() {
         const styles = {
             container: {
-                width: 400,
+                width: 350,
                 height: 99,
-                padding: '0 25px 0 25px',
+                margin: '0 25px 0 25px',
                 borderBottom: '1px solid #d1d5da',
                 display: 'flex',
                 alignItems: 'flex-end',
-                justifyContent: 'center',
+                justifyContent: 'space-around',
             },
         }
 
@@ -30,7 +30,8 @@ class HeaderTabs extends React.Component {
                     return (
                         <HeaderTabItem
                             key={index}
-                            title={item.name}
+                            name={item.name}
+                            title={item.title}
                             imgURL={item.imgURL}
                             setContent={this.props.setContent}
                         />
