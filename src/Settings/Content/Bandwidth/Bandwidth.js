@@ -1,5 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { ChoiceGroup } from "office-ui-fabric-react/lib/ChoiceGroup"
+import { TextField } from "office-ui-fabric-react/lib/TextField"
 
 class Bandwidth extends React.Component {
     constructor(props) {
@@ -13,6 +15,12 @@ class Bandwidth extends React.Component {
                 height: 250,
                 display: 'flex',
                 flexDirection: 'column',
+                alignItems: 'center',
+            },
+            optionContainer: {
+                width: 300,
+                height: 100,
+                display: 'flex',
                 alignItems: 'center',
             },
         }
