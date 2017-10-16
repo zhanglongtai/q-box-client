@@ -2,3 +2,4 @@
 /node_modules/
 /python-shell-test/
 .gitignore
+/js-test/
