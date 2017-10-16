@@ -4,12 +4,14 @@ import {
     generalTemp,
  } from "./generalReducers"
 import {
+    bandwidth,
+    bandwidthTemp,
+} from "./bandwidthReducers"
+import {
     content,
     contentList,
     account,
     accountTemp,
-    bandwidth,
-    bandwidthTemp,
     proxy,
     proxyTemp,
     sync,

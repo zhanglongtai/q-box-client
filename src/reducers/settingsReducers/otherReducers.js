@@ -22,13 +22,6 @@ function accountTemp(state = settingsInitialState.accountTemp) {
     return state
 }
 
-function bandwidth(state = settingsInitialState.bandwidth) {
-    return state
-}
-function bandwidthTemp(state = settingsInitialState.bandwidthTemp) {
-    return state
-}
-
 function proxy(state = settingsInitialState.proxy) {
     return state
 }
@@ -48,8 +41,6 @@ export {
     contentList,
     account,
     accountTemp,
-    bandwidth,
-    bandwidthTemp,
     proxy,
     proxyTemp,
     sync,

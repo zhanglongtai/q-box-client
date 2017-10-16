@@ -43,49 +43,49 @@ const settingsInitailState = {
     },
     bandwidth: {
         downloadLimit: false,
-        downloadDefaultLimitSpeed: '50.0',
-        downloadLimitSpeed: '',
+        downloadLimitSpeedDefault: '50.0',
+        downloadLimitSpeed: '50.0',
         uploadLimit: false,
-        uploadDefaultLimitSpeed: '10.0',
-        uploadLimitSpeed: '',
+        uploadLimitSpeedDefault: '10.0',
+        uploadLimitSpeed: '10.0',
         lanSync: true,
     },
     bandwidthTemp: {
         downloadLimit: false,
-        downloadDefaultLimitSpeed: '50.0',
-        downloadLimitSpeed: '',
+        downloadLimitSpeedDefault: '50.0',
+        downloadLimitSpeed: '50.0',
         uploadLimit: false,
-        uploadDefaultLimitSpeed: '10.0',
-        uploadLimitSpeed: '',
+        uploadLimitSpeedDefault: '10.0',
+        uploadLimitSpeed: '10.0',
         lanSync: true,
     },
     proxy: {
         option: 'none', // 'none', 'auto', 'manual'
-        defaultOption: 'none',
+        optionDefault: 'none',
         protocol: 'HTTP', // 'HTTP', 'SOCKS4', 'SOCKS5'
-        defaultProtocol: 'HTTP',
+        protocolDefault: 'HTTP',
         serverIP: '',
-        defaultServerIP: '',
+        serverIPDefault: '',
         serverPort: '8080',
-        defaultServerPort: '8080',
+        serverPortDefault: '8080',
     },
     proxyTemp: {
         option: 'none', // 'none', 'auto', 'manual'
-        defaultOption: 'none',
+        optionDefault: 'none',
         protocol: 'HTTP', // 'HTTP', 'SOCKS4', 'SOCKS5'
-        defaultProtocol: 'HTTP',
+        protocolDefault: 'HTTP',
         serverIP: '',
-        defaultServerIP: '',
+        serverIPDefault: '',
         serverPort: '8080',
-        defaultServerPort: '8080',
+        serverPortDefault: '8080',
     },
     sync: {
         path: '',
-        defaultPath: '',
+        pathDefault: '',
     },
     syncTemp: {
         path: '',
-        defaultPath: '',
+        pathDefault: '',
     },
 }
 
