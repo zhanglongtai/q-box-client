@@ -39,7 +39,6 @@ class Proxy extends React.Component {
                 width: 350,
                 height: 250,
                 display: 'flex',
-                alignItems: 'center',
             },
             title2: {
                 width: 150,
@@ -51,6 +50,8 @@ class Proxy extends React.Component {
             group2: {
                 width: 200,
                 height: 30,
+                display: 'flex',
+                padding: '0 0 0 10px',
             },
         }
 
@@ -100,15 +101,27 @@ class Proxy extends React.Component {
                         className="proxy-option-group"
                         style={styles.group2}
                     >
-                        <Dropdown
+                        {/* <Dropdown
                             selectedKey={this.props.protocol}
                             options={[
                                 { key: 'HTTP', text: 'HTTP' },
                                 { key: 'SOCKS4', text: 'SOCKS4' },
                                 { key: 'SOCKS5', text: 'SOCKS5' },
                             ]}
-                            onChanged={this.props.set}
-                        />
+                            onChanged={(option) => {
+                                this.props.setProtocol(option.key)}
+                            }
+                            disabled={this.props.option === 'none' || this.props.option === 'auto'}
+                        /> */}
+                        <div class="pt-select .pt-fill">
+                            <select :disabled>
+                                <option selected>Choose an item...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

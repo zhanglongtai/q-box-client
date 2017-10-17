@@ -19,7 +19,7 @@ class Settings extends React.Component {
         const styles = {
             container: {
                 width: 400,
-                height: 400,
+                height: 500,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

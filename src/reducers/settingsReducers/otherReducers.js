@@ -22,13 +22,6 @@ function accountTemp(state = settingsInitialState.accountTemp) {
     return state
 }
 
-function proxy(state = settingsInitialState.proxy) {
-    return state
-}
-function proxyTemp(state = settingsInitialState.proxyTemp) {
-    return state
-}
-
 function sync(state = settingsInitialState.sync) {
     return state
 }
@@ -41,8 +34,6 @@ export {
     contentList,
     account,
     accountTemp,
-    proxy,
-    proxyTemp,
     sync,
     syncTemp,
 }

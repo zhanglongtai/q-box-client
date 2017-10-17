@@ -1,10 +1,14 @@
-import { setLaunchAtLogin } from "./generalActions";
+import { setLaunchAtLogin } from "./generalActions"
 import {
     setDownloadLimit,
     setDownloadLimitSpeed,
     setUploadLimit,
     setUploadLimitSpeed,
-} from "./bandwidthActions";
+} from "./bandwidthActions"
+import {
+    setOption,
+    setProtocol,
+} from "./proxyActions";
 import {
     setContent,
 } from "./otherActions"
@@ -16,4 +20,6 @@ export {
     setUploadLimit,
     setUploadLimitSpeed,
     setContent,
+    setOption,
+    setProtocol,
 }

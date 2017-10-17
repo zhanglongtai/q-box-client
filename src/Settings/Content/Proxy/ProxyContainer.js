@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setOption: (content) => {
 			dispatch(setOption(content))
+        },
+        setProtocol: (protocol) => {
+			dispatch(setProtocol(protocol))
 		},
 	}
 }

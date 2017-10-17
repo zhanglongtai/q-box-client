@@ -8,12 +8,14 @@ import {
     bandwidthTemp,
 } from "./bandwidthReducers"
 import {
+    proxy,
+    proxyTemp,
+} from "./proxyReducers"
+import {
     content,
     contentList,
     account,
     accountTemp,
-    proxy,
-    proxyTemp,
     sync,
     syncTemp,
 } from "./otherReducers"
