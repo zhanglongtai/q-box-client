@@ -1,30 +1,34 @@
 import { connect } from "react-redux"
+import {
+    setOption,
+    setProtocol,
+} from "../../../actions/settingsActions"
 import Proxy from "./Proxy"
 
 const mapStateToProps = (state) => {
 	return {
         option: state.proxyTemp.option,
-        defaultOption: state.proxyTemp.defaultOption,
+        optionDefault: state.proxyTemp.optionDefault,
         protocol: state.proxyTemp.protocol,
-        defaultProtocol: state.proxyTemp.defaultProtocol,
+        protocolDefault: state.proxyTemp.protocolDefault,
         serverIP: state.proxyTemp.serverIP,
-        defaultServerIP: state.proxyTemp.defaultServerIP,
+        serverIPDefault: state.proxyTemp.serverIPDefault,
         serverPort: state.proxyTemp.serverPort,
-        defaultServerPort: state.proxyTemp.defaultServerPort,
+        serverPortDefault: state.proxyTemp.serverPortDefault,
 	}
 }
 
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		setContent: (content) => {
-// 			dispatch(setContent(content))
-// 		},
-// 	}
-// }
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setOption: (content) => {
+			dispatch(setOption(content))
+		},
+	}
+}
 
 const ProxyContainer = connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(Proxy)
 
 export default ProxyContainer

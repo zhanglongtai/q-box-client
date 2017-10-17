@@ -14,6 +14,7 @@ class CheckCircle extends React.Component {
                 margin: '0 5px 0 5px',
                 display: 'flex',
                 alignItems: 'center',
+                cursor: 'pointer',
             },
             checkCircle: {
                 width: 20,
@@ -43,8 +44,8 @@ class CheckCircle extends React.Component {
                 borderRadius: '50%',
             },
             checkPointSelected: {
-                width: 10,
-                height: 10,
+                // width: 10,
+                // height: 10,
                 border: '5px solid #0078d7',
                 borderRadius: '50%',
             },

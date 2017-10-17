@@ -17,7 +17,7 @@ class General extends React.Component {
         const styles = {
             container: {
                 width: 400,
-                height: 250,
+                height: 350,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
