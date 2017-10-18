@@ -2,6 +2,7 @@ const {
 	app,
 	Menu,
 	BrowserWindow,
+	webContents,
 	dialog,
 	Tray,
 	ipcMain,
@@ -89,9 +90,9 @@ function createMain() {
 	}
 	win.winMain = new BrowserWindow(options)
 
-	if (config.environment === 'dev') {
-		win.winMain.webContents.openDevTools()
-	}
+	// if (config.environment === 'dev') {
+	// 	win.winMain.webContents.openDevTools()
+	// }
 
 	config.mainPosition = new Position(win.winMain)
 
@@ -217,9 +218,9 @@ function createSettings() {
 	// don't display menu
 	win.winSettings.setMenuBarVisibility(false)
 
-	if (config.environment === 'dev') {
-		win.winSettings.webContents.openDevTools()
-	}
+	// if (config.environment === 'dev') {
+	// 	win.winSettings.webContents.openDevTools()
+	// }
 
 	win.winSettings.loadURL(`file://${__dirname}/renderer/settings.html`)
 }
@@ -264,6 +265,7 @@ ipcMain.on('settings-close', () => {
 })
 // ========== Settings ==========
 
+// ========== APP ==========
 app.on('ready', () => {
 	if (config.environment === 'dev') {
 		BrowserWindow.addDevToolsExtension(reactDevtool)
@@ -274,6 +276,20 @@ app.on('ready', () => {
 	createMain()
 	showMain()
 });
+// ========== APP ==========
+
+// ========== Toogle Devtools ==========
+ipcMain.on('toogle-devtools', () => {
+	if (config.environment === 'dev') {
+        const contents = webContents.getFocusedWebContents()
+		if (contents.isDevToolsOpened()) {
+			contents.closeDevTools()
+		} else {
+			contents.openDevTools()
+		}
+	}
+})
+// ========== Toogle Devtools ==========
 
 // ========== fetch activity list ==========
 ipcMain.on('fetch-activity-list', (event) => {

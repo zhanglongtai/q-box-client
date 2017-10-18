@@ -26,6 +26,12 @@ class Settings extends React.Component {
         })
     }
 
+    toogleDevTools(event) {
+        if (event.keyCode === 123) {
+            ipcRenderer.send('toogle-devtools')
+        }
+    }
+
     render() {
         const styles = {
             container: {
@@ -49,6 +55,8 @@ class Settings extends React.Component {
             <div
                 className="settings-container"
                 style={styles.container}
+                onKeyDown={this.toogleDevTools}
+                tabIndex="0"
             >
                 <HeaderTabsContainer />
                 {content[this.props.content]}

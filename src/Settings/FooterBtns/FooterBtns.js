@@ -25,6 +25,7 @@ class FooterBtns extends React.Component {
         super(props)
 
         this.handleConfirm = this.handleConfirm.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
     }
 
     handleConfirm() {
@@ -34,6 +35,11 @@ class FooterBtns extends React.Component {
         ipcRenderer.on('settings-updated', (event) => {
             event.sender.send('settings-close')
         })
+    }
+
+    handleCancel() {
+        this.props.cancelSettings(this.props.options)
+        ipcRenderer.send('settings-close')
     }
 
     render() {
@@ -68,7 +74,7 @@ class FooterBtns extends React.Component {
                     <Button
                         text="取消"
                         className="pt-fill"
-                        onClick={this.props.cancelSettings.bind(null, this.props.options)}
+                        onClick={this.handleCancel}
                     />
                 </div>
                 <div
