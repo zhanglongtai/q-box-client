@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import HeaderTabItem from "./HeaderTabItem";
+import HeaderTabItem from "./HeaderTabItem"
 import { log } from '../../utils'
 
 class HeaderTabs extends React.Component {

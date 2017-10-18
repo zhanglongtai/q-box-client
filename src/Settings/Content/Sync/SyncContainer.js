@@ -3,8 +3,8 @@ import Sync from "./Sync"
 
 const mapStateToProps = (state) => {
 	return {
-        path: state.syncTemp.path,
-        defaultPath: state.syncTemp.defaultPath,
+        path: state.options.syncTemp.path,
+        defaultPath: state.options.syncTemp.defaultPath,
 	}
 }
 

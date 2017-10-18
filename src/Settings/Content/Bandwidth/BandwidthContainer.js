@@ -9,13 +9,13 @@ import Bandwidth from "./Bandwidth"
 
 const mapStateToProps = (state) => {
 	return {
-        downloadLimit: state.bandwidthTemp.downloadLimit,
-        downloadLimitSpeedDefault: state.bandwidthTemp.downloadLimitSpeedDefault,
-        downloadLimitSpeed: state.bandwidthTemp.downloadLimitSpeed,
-        uploadLimit: state.bandwidthTemp.uploadLimit,
-        uploadLimitSpeedDefault: state.bandwidthTemp.uploadLimitSpeedDefault,
-        uploadLimitSpeed: state.bandwidthTemp.uploadLimitSpeed,
-        lanSync: state.bandwidthTemp.lanSync,
+        downloadLimit: state.options.bandwidthTemp.downloadLimit,
+        downloadLimitSpeedDefault: state.options.bandwidthTemp.downloadLimitSpeedDefault,
+        downloadLimitSpeed: state.options.bandwidthTemp.downloadLimitSpeed,
+        uploadLimit: state.options.bandwidthTemp.uploadLimit,
+        uploadLimitSpeedDefault: state.options.bandwidthTemp.uploadLimitSpeedDefault,
+        uploadLimitSpeed: state.options.bandwidthTemp.uploadLimitSpeed,
+        lanSync: state.options.bandwidthTemp.lanSync,
 	}
 }
 

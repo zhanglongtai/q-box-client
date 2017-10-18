@@ -7,14 +7,14 @@ import Proxy from "./Proxy"
 
 const mapStateToProps = (state) => {
 	return {
-        option: state.proxyTemp.option,
-        optionDefault: state.proxyTemp.optionDefault,
-        protocol: state.proxyTemp.protocol,
-        protocolDefault: state.proxyTemp.protocolDefault,
-        serverIP: state.proxyTemp.serverIP,
-        serverIPDefault: state.proxyTemp.serverIPDefault,
-        serverPort: state.proxyTemp.serverPort,
-        serverPortDefault: state.proxyTemp.serverPortDefault,
+        option: state.options.proxyTemp.option,
+        optionDefault: state.options.proxyTemp.optionDefault,
+        protocol: state.options.proxyTemp.protocol,
+        protocolDefault: state.options.proxyTemp.protocolDefault,
+        serverIP: state.options.proxyTemp.serverIP,
+        serverIPDefault: state.options.proxyTemp.serverIPDefault,
+        serverPort: state.options.proxyTemp.serverPort,
+        serverPortDefault: state.options.proxyTemp.serverPortDefault,
 	}
 }
 

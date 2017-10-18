@@ -3,8 +3,8 @@ import Account from "./Account"
 
 const mapStateToProps = (state) => {
 	return {
-		space: state.accountTemp.space,
-        relevance: state.accountTemp.relevance,
+		space: state.options.accountTemp.space,
+        relevance: state.options.accountTemp.relevance,
 	}
 }
 

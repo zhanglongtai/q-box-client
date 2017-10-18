@@ -1,10 +1,13 @@
-import settingsInitialState from "./settingsInitialState"
-
-function proxy(state = settingsInitialState.proxy) {
-    return state
+function proxy(state, action) {
+    switch(action.type) {
+        case 'CONFIRM':
+            return Object.assign({}, state, action.options.proxyTemp)
+        default:
+            return state
+    }
 }
 
-function proxyTemp(state = settingsInitialState.proxyTemp, action) {
+function proxyTemp(state, action) {
     switch(action.type) {
         case 'SET_OPTION':
             return Object.assign({}, state, {
@@ -14,6 +17,8 @@ function proxyTemp(state = settingsInitialState.proxyTemp, action) {
             return Object.assign({}, state, {
                 protocol: action.protocol,
             })
+        case 'CANCEL':
+            return Object.assign({}, state, action.options.proxy)
         default:
             return state
     }

@@ -13,27 +13,7 @@ function contentList(state = settingsInitialState.contentList) {
     return state
 }
 
-
-
-function account(state = settingsInitialState.account) {
-    return state
-}
-function accountTemp(state = settingsInitialState.accountTemp) {
-    return state
-}
-
-function sync(state = settingsInitialState.sync) {
-    return state
-}
-function syncTemp(state = settingsInitialState.syncTemp) {
-    return state
-}
-
 export {
     content,
     contentList,
-    account,
-    accountTemp,
-    sync,
-    syncTemp,
 }

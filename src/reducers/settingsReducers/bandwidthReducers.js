@@ -1,10 +1,13 @@
-import settingsInitialState from "./settingsInitialState"
-
-function bandwidth(state = settingsInitialState.bandwidth) {
-    return state
+function bandwidth(state, action) {
+    switch(action.type) {
+        case 'CONFIRM':
+            return Object.assign({}, state, action.options.bandwidthTemp)
+        default:
+            return state
+    }
 }
 
-function bandwidthTemp(state = settingsInitialState.bandwidthTemp, action) {
+function bandwidthTemp(state, action) {
     switch(action.type) {
         case 'SET_DOWNLOAD_LIMIT':
             return Object.assign({}, state, {
@@ -22,6 +25,8 @@ function bandwidthTemp(state = settingsInitialState.bandwidthTemp, action) {
             return Object.assign({}, state, {
                 uploadLimitSpeed: action.uploadLimitSpeed,
             })
+        case 'CANCEL':
+            return Object.assign({}, state, action.options.bandwidth)
         default:
             return state
     }

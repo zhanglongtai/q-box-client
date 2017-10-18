@@ -11,6 +11,8 @@ import {
 } from "./proxyActions";
 import {
     setContent,
+    cancelSettings,
+    confirmSettings,
 } from "./otherActions"
 
 export {
@@ -19,7 +21,9 @@ export {
     setDownloadLimitSpeed,
     setUploadLimit,
     setUploadLimitSpeed,
-    setContent,
     setOption,
     setProtocol,
+    setContent,
+    cancelSettings,
+    confirmSettings,
 }

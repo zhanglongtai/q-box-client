@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { HeaderTabsContainer } from "./HeaderTabs";
+import { FooterBtnsContainer } from "./FooterBtns";
 import {
     AccountContainer,
     BandwidthContainer,
@@ -41,6 +42,7 @@ class Settings extends React.Component {
             >
                 <HeaderTabsContainer />
                 {content[this.props.content]}
+                <FooterBtnsContainer />
             </div>
         )
     }
