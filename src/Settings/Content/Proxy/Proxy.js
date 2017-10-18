@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Dropdown } from "office-ui-fabric-react/lib/Dropdown"
 import CheckCircle from "../../CheckCircle"
+import { log } from "../../../utils"
 
 class Proxy extends React.Component {
     constructor(props) {
@@ -55,6 +56,40 @@ class Proxy extends React.Component {
             },
         }
 
+        let selector = null
+        if (this.props.option === 'manual') {
+            selector = (
+                <div className="pt-select .pt-fill">
+                    <select
+                        value={this.props.protocol}
+                        onChange={(event) => {
+                            const s = event.target
+                            for (let i = 0; i < s.length; i++) {
+                                const option = s.options[i]
+                                if (option.selected) {
+                                    this.props.setProtocol(option.value)
+                                }
+                            }
+                        }}
+                    >
+                        <option value="HTTP">HTTP</option>
+                        <option value="SOCKS4">SOCKS4</option>
+                        <option value="SOCKS5">SOCKS5</option>
+                    </select>
+                </div>
+            )
+        } else {
+            selector = (
+                <div className="pt-select .pt-fill">
+                    <select value={this.props.protocolDefault} disabled>
+                        <option value="HTTP">HTTP</option>
+                        <option value="SOCKS4">SOCKS4</option>
+                        <option value="SOCKS5">SOCKS5</option>
+                    </select>
+                </div>
+            )
+        }
+
         return (
             <div
                 className="proxy-container"
@@ -101,27 +136,7 @@ class Proxy extends React.Component {
                         className="proxy-option-group"
                         style={styles.group2}
                     >
-                        {/* <Dropdown
-                            selectedKey={this.props.protocol}
-                            options={[
-                                { key: 'HTTP', text: 'HTTP' },
-                                { key: 'SOCKS4', text: 'SOCKS4' },
-                                { key: 'SOCKS5', text: 'SOCKS5' },
-                            ]}
-                            onChanged={(option) => {
-                                this.props.setProtocol(option.key)}
-                            }
-                            disabled={this.props.option === 'none' || this.props.option === 'auto'}
-                        /> */}
-                        <div class="pt-select .pt-fill">
-                            <select :disabled>
-                                <option selected>Choose an item...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                <option value="4">Four</option>
-                            </select>
-                        </div>
+                        {selector}
                     </div>
                 </div>
             </div>

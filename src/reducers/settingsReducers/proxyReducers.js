@@ -10,6 +10,10 @@ function proxyTemp(state = settingsInitialState.proxyTemp, action) {
             return Object.assign({}, state, {
                 option: action.option,
             })
+        case 'SET_PROTOCOL':
+            return Object.assign({}, state, {
+                protocol: action.protocol,
+            })
         default:
             return state
     }
