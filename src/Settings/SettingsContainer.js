@@ -1,4 +1,5 @@
 import { connect } from "react-redux"
+import { initSettings } from "../actions/settingsActions"
 import Settings from "./Settings"
 
 const mapStateToProps = (state) => {
@@ -7,9 +8,17 @@ const mapStateToProps = (state) => {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		initSettings: (state) => {
+			dispatch(initSettings(state))
+        },
+	}
+}
+
 const SettingsContainer = connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(Settings)
 
 export default SettingsContainer

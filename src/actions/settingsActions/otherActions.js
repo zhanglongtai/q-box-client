@@ -5,22 +5,30 @@ function setContent(content) {
     }
 }
 
-function cancelSettings(state) {
+function initSettings(options) {
     return {
-        type: 'CANCEL',
-        state: state,
+        type: 'INIT',
+        options: options,
     }
 }
 
-function confirmSettings(state) {
+function cancelSettings(options) {
+    return {
+        type: 'CANCEL',
+        options: options,
+    }
+}
+
+function confirmSettings(options) {
     return {
         type: 'CONFIRM',
-        state: state,
+        options: options,
     }
 }
 
 export {
     setContent,
+    initSettings,
     cancelSettings,
     confirmSettings,
 }

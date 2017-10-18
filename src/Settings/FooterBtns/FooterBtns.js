@@ -23,12 +23,17 @@ function optionsForConfirm(obj) {
 class FooterBtns extends React.Component {
     constructor(props) {
         super(props)
+
+        this.handleConfirm = this.handleConfirm.bind(this)
     }
 
     handleConfirm() {
         this.props.confirmSettings(this.props.options)
         const newOptions = optionsForConfirm(this.props.options)
         ipcRenderer.send('settings-update', newOptions)
+        ipcRenderer.on('settings-updated', (event) => {
+            event.sender.send('settings-close')
+        })
     }
 
     render() {

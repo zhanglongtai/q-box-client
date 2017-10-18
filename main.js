@@ -8,6 +8,7 @@ const {
 	shell,
 } = require('electron')
 const Position = require('electron-positioner')
+const fs = require('fs')
 
 let reactDevtool = null
 switch (process.platform) {
@@ -32,7 +33,8 @@ const config = {
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
 	folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
 	upgradeURL: 'www.baidu.com',
-	environment: 'prod', // 'dev' or 'prod'
+	settingsFile: `${__dirname}/renderer/settings.json`,
+	environment: 'dev', // 'dev' or 'prod'
 	mainPosition: null,
 	tray: null,
 	menu: null,
@@ -220,17 +222,46 @@ function createSettings() {
 	}
 
 	win.winSettings.loadURL(`file://${__dirname}/renderer/settings.html`)
-	
-	win.winSettings.once('ready-to-show', () => {
-		win.winSettings.show()
-	})
 }
 
 function closeSettings() {
 	if (win.winSettings !== null) {
 		win.winSettings.close()
+		win.winSettings = null
 	}
 }
+
+ipcMain.on('settings-ready', (event) => {
+	fs.readFile(config.settingsFile, (err, data) => {
+		if (err) {
+			throw err
+		} else {
+			const options = JSON.parse(data)
+			event.sender.send('settings-options', options)
+		}
+	})
+})
+
+ipcMain.on('settings-options-received', () => {
+    win.winSettings.show()
+})
+
+ipcMain.on('settings-update', (event, options) => {
+	fs.writeFile(config.settingsFile,
+		JSON.stringify(options, null, 4),
+		(err) => {
+			if (err) {
+				throw err
+			} else {
+				event.sender.send('settings-updated')
+			}
+		}
+    )
+})
+
+ipcMain.on('settings-close', () => {
+	closeSettings()
+})
 // ========== Settings ==========
 
 app.on('ready', () => {

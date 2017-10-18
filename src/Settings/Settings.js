@@ -11,9 +11,19 @@ import {
 } from "./Content";
 import { log } from "../utils"
 
+const { ipcRenderer } = window.require('electron')
+
 class Settings extends React.Component {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+        ipcRenderer.send('settings-ready')
+        ipcRenderer.on('settings-options', (event, options) => {
+            this.props.initSettings(options)
+            event.sender.send('settings-options-received')
+        })
     }
 
     render() {
@@ -50,6 +60,7 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
     content: PropTypes.string.isRequired,
+    initSettings: PropTypes.func.isRequired,
 }
 
 export default Settings

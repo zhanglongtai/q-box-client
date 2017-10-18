@@ -1,5 +1,7 @@
 function proxy(state, action) {
     switch(action.type) {
+        case 'INIT':
+            return Object.assign({}, state, action.options.proxy)
         case 'CONFIRM':
             return Object.assign({}, state, action.options.proxyTemp)
         default:
@@ -9,6 +11,8 @@ function proxy(state, action) {
 
 function proxyTemp(state, action) {
     switch(action.type) {
+        case 'INIT':
+            return Object.assign({}, state, action.options.proxyTemp)
         case 'SET_OPTION':
             return Object.assign({}, state, {
                 option: action.option,

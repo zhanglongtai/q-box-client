@@ -11,6 +11,7 @@ import {
 } from "./proxyActions";
 import {
     setContent,
+    initSettings,
     cancelSettings,
     confirmSettings,
 } from "./otherActions"
@@ -24,6 +25,7 @@ export {
     setOption,
     setProtocol,
     setContent,
+    initSettings,
     cancelSettings,
     confirmSettings,
 }

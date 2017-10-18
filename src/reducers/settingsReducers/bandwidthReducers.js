@@ -1,5 +1,7 @@
 function bandwidth(state, action) {
     switch(action.type) {
+        case 'INIT':
+            return Object.assign({}, state, action.options.bandwidth)
         case 'CONFIRM':
             return Object.assign({}, state, action.options.bandwidthTemp)
         default:
@@ -9,6 +11,8 @@ function bandwidth(state, action) {
 
 function bandwidthTemp(state, action) {
     switch(action.type) {
+        case 'INIT':
+            return Object.assign({}, state, action.options.bandwidthTemp)
         case 'SET_DOWNLOAD_LIMIT':
             return Object.assign({}, state, {
                 downloadLimit: action.downloadLimit,
