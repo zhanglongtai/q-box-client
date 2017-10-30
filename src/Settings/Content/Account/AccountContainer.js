@@ -5,6 +5,7 @@ const mapStateToProps = (state) => {
 	return {
 		space: state.options.accountTemp.space,
         relevance: state.options.accountTemp.relevance,
+        email: state.options.accountTemp.email,
 	}
 }
 

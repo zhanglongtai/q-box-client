@@ -35,8 +35,9 @@ const settingsInitailState = {
             launchAtLogin: true,
         },
         account: {
-            space: '',
-            relevance: 'user_id',
+            space: '1G',
+            relevance: 'username',
+            email: 'xxx@example.com',
         },
         accountTemp: {
             space: '',

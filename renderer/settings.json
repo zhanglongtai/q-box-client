@@ -4,8 +4,9 @@
         "space": ""
     },
     "accountTemp": {
-        "relevance": "user_id",
-        "space": ""
+        "email": "xxx@example.com",
+        "relevance": "username",
+        "space": "1G"
     },
     "bandwidth": {
         "downloadLimit": false,

@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import OptionBox from "../../OptionBox"
 
 class Account extends React.Component {
     constructor(props) {
@@ -15,6 +16,11 @@ class Account extends React.Component {
                 flexDirection: 'column',
                 alignItems: 'center',
             },
+            text: {
+                height: 30,
+                fontSize: '20px Helvetica,Arial,sans-serif',
+                lineHeight: 30,
+            },
         }
 
         return (
@@ -22,7 +28,18 @@ class Account extends React.Component {
                 className="account-container"
                 style={styles.container}
             >
-                account
+                <OptionBox
+                    title="空间"
+                >
+                    <div
+                        className="account-text"
+                        style={styles.text}
+                    >已使用{this.props.space}空间</div>
+                </OptionBox>
+                <OptionBox
+                    title="关联的账户"
+                >
+                </OptionBox>
             </div>
         )
     }
@@ -31,6 +48,7 @@ class Account extends React.Component {
 Account.propTypes = {
     space: PropTypes.string.isRequired,
     relevance: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
 }
 
 export default Account

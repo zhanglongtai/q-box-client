@@ -3,3 +3,4 @@
 /python-shell-test/
 .gitignore
 /js-test/
+/dist/
