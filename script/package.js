@@ -130,6 +130,9 @@ function startCliUI() {
             const platform = argsTable.platform[argsList[0]]
             const arch = argsTable.arch[argsList[1]]
             const p = argsTable.func[argsList[0]]
+            log('\n')
+            log('Begin to package ...\n')
+            log('\n')
             p(platform, arch)
         }
     })

@@ -142,6 +142,9 @@ function startCliUI() {
             const arch = argsTable.arch[argsList[1]]
             const asar = argsTable.asar[argsList[2]]
             const p = argsTable.func[argsList[0]]
+            log('\n')
+            log('Begin to build ...\n')
+            log('\n')
             p(arch, asar)
         }
     })

@@ -11,6 +11,8 @@ const {
 const Position = require('electron-positioner')
 const fs = require('fs')
 
+const sh = require("./main/squirrelHander.js")
+
 let reactDevtool = null
 switch (process.platform) {
 	case 'linux':
@@ -30,6 +32,7 @@ const win = {
 
 // app config
 const config = {
+	installing: false,
 	iconPath: '',
 	trayPath: `${__dirname}/renderer/icon/tray.png`,
 	folderPath: 'C:\\Users\\Tiger\\Dropbox\\',
@@ -40,12 +43,58 @@ const config = {
 	tray: null,
 	menu: null,
 	sync: true,
+	handlingSquirrelEvent: false,
 }
 
-// util func
+
+// ========== util func ==========
 function log() {
     console.log.apply(null, arguments)
 }
+// ========== util func ==========
+
+
+// ========== stop sencod instance ==========
+const isSecondInstance = app.makeSingleInstance(() => {
+	// Someone tried to run a second instance, we should focus our window.
+	if (win.winMain !== null) {
+		if (win.winMain.isMinimized()) {
+			win.winMain.restore()
+		}
+		win.winMain.focus()
+	}
+})
+  
+if (isSecondInstance) {
+	app.quit()
+}
+// ========== stop sencod instance ==========
+
+
+// ========== handle squirrel event ==========
+// if (process.platform === 'win32' && process.argv.length > 1) {
+// 	const arg = process.argv[1]
+
+// 	const promise = sh.handleSquirrelEvent(arg)
+// 	if (promise) {
+// 		config.handlingSquirrelEvent = true
+// 		promise
+// 		    .catch((err) => {
+// 				console.error(`Failer handling Squirrel event: ${arg}`, err)
+// 			})
+// 			.then(() => {
+// 				app.quit()
+// 			})
+// 	}
+// }
+
+if (process.platform === 'win32' && process.argv.length > 1) {
+	config.installing = true
+	const arg = process.argv[1]
+	sh.handleSquirrelEvent(app, arg)
+}
+// ========== handle squirrel event ==========
+
 
 // ========== Tray ==========
 function createTray() {
@@ -79,6 +128,7 @@ function createTray() {
 	})
 }
 // ========== Tray ==========
+
 
 // ========== Main ==========
 function createMain() {
@@ -209,7 +259,7 @@ function createLogin() {
 function createSettings() {
 	const options = {
 		width: 400,
-		height: 400,
+		height: 500,
 		show: false,
 		icon: config.iconPath,
 	}
@@ -267,15 +317,17 @@ ipcMain.on('settings-close', () => {
 
 // ========== APP ==========
 app.on('ready', () => {
-	if (config.environment === 'dev') {
-		BrowserWindow.addDevToolsExtension(reactDevtool)
+	if (!config.installing) {
+		if (config.environment === 'dev') {
+			BrowserWindow.addDevToolsExtension(reactDevtool)
+		}
+	
+		// createLogin()
+		createTray()
+		createMain()
+		showMain()
 	}
-
-	// createLogin()
-	createTray()
-	createMain()
-	showMain()
-});
+})
 // ========== APP ==========
 
 // ========== Toogle Devtools ==========
