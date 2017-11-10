@@ -1,3 +1,5 @@
+import { create } from 'domain';
+
 const {
 	app,
 	Menu,
@@ -12,6 +14,7 @@ const Position = require('electron-positioner')
 const fs = require('fs')
 
 const sh = require("./main/squirrelHander.js")
+const userStore = require("./main/store/userStore")
 
 let reactDevtool = null
 switch (process.platform) {
@@ -44,6 +47,8 @@ const config = {
 	menu: null,
 	sync: true,
 	handlingSquirrelEvent: false,
+	qrcodeURL: '',
+	imgURL: '',
 }
 
 
@@ -253,6 +258,41 @@ function createLogin() {
 		win.winLogin.show()
 	})
 }
+
+const showLogin = function() {
+	if (win.winLogin !== null) {
+		win.winLogin.show()
+	}
+}
+
+const closeLogin = function() {
+	if (win.winLogin !== null) {
+		win.winLogin.close()
+		win.winLogin = null
+	}
+}
+
+ipcMain.on('login-ready', (event) => {
+	const imgURL = config.imgURL
+	const qrcodeURL = config.qrcodeURL
+	
+	event.sender.send('login-url', {
+		imgURL: imgURL,
+		qrcodeURL: qrcodeURL,
+	})
+})
+
+ipcMain.on('login-ready-show', () => {
+	showLogin()
+})
+
+ipcMain.on('login-finish', (event, args) => {
+	const user = new userStore.UserStore()
+	const { username, session } = args
+	user.save(username, session)
+
+	closeLogin()
+})
 // ========== Login ==========
 
 // ========== Settings ==========
@@ -316,16 +356,49 @@ ipcMain.on('settings-close', () => {
 // ========== Settings ==========
 
 // ========== APP ==========
+const verifySession = function(session) {
+	return
+}
+
+const sessionExpired = function() {
+    const u = new userStore.UserStore()
+	const session = u.getSession()
+
+	if (verifySession(session)) {
+		return true
+	} else {
+		return false
+	}
+}
+
+const userLogined = function() {
+	const u = new userStore.UserStore()
+	const username = u.getUsername()
+
+	if (username !== '') {
+		return true
+	} else {
+		return false
+	}
+}
+
 app.on('ready', () => {
 	if (!config.installing) {
 		if (config.environment === 'dev') {
 			BrowserWindow.addDevToolsExtension(reactDevtool)
 		}
 	
-		// createLogin()
-		createTray()
-		createMain()
-		showMain()
+		if (userLogined()) {
+			if (sessionExpired()) {
+				createLogin()
+			} else {
+                createTray()
+				createMain()
+				showMain()
+			}
+		} else {
+            createLogin()
+		}
 	}
 })
 // ========== APP ==========
