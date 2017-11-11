@@ -4,6 +4,8 @@ module.exports = {
   entry: {
     main: './src/mainIndex.js',
     settings: './src/settingsIndex.js',
+    login: './src/loginIndex.js',
+    folderPanel: './src/folderPanelIndex.js'
   },
   
   output: {

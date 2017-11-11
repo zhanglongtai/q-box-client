@@ -1,11 +1,14 @@
 {
     "account": {
-        "relevance": "user_id",
+        "relevance": "",
+        "session": "",
+        "email": "xxx@example.com",
         "space": ""
     },
     "accountTemp": {
-        "email": "xxx@example.com",
         "relevance": "username",
+        "session": "",
+        "email": "xxx@example.com",
         "space": "1G"
     },
     "bandwidth": {
@@ -53,10 +56,12 @@
         "serverPortDefault": "8080"
     },
     "sync": {
+        "folderFirstSetted": true,
         "path": "",
         "pathDefault": ""
     },
     "syncTemp": {
+        "folderFirstSetted": true,
         "path": "",
         "pathDefault": ""
     }

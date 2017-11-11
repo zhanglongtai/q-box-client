@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@blueprintjs/core": "^1.31.0",
+    "drivelist": "^5.2.7",
     "electron-positioner": "^3.0.0",
     "office-ui-fabric-react": "^5.8.2",
     "python-shell": "^0.4.0",
