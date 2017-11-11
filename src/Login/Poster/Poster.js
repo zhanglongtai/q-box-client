@@ -1,5 +1,5 @@
 import React from "react"
-// import PropTypes from "prop-types"
+import PropTypes from "prop-types"
 
 const { ipcRenderer } = window.require('electron')
 
@@ -40,6 +40,12 @@ class WeiXinLogin extends React.Component {
             </div>
         )
     }
+}
+
+WeiXinLogin.propTypes = {
+    website: PropTypes.string.isRequired,
+    sync: PropTypes.bool.isRequired,
+    setSync: PropTypes.func.isRequired,
 }
 
 export default WeiXinLogin
