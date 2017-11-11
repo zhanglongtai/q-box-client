@@ -1,42 +1,45 @@
 const fs = require("fs")
 
 class UserStore {
-    constructor() {
-        this.savePath = ''
+    constructor(filePath) {
+        this.filePath = filePath
     }
 
     save(username, session) {
-        const info = {
-            username: username,
-            session: session,
+        let settings
+        try {
+            settings = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
+            settings.account.relevance = username
+            settings.accountTemp.relevance = username
+            settings.account.session = session
+            settings.accountTemp.session = session
+        } catch (err) {
+            throw err
         }
 
-        fs.writeFile(this.savePath,
-            JSON.stringify(info, null, 4),
-            (err) => {
-                if (err) {
-                    throw err
-                } else {
-                    event.sender.send('settings-updated')
-                }
-            }
-        )
+        try {
+            fs.writeFileSync(
+                this.filePath,
+                JSON.stringify(settings, null, 4)
+            )
+        } catch (err) {
+            throw err
+        }
     }
 
     getInfo() {
-        fs.readFile(this.savePath, (err, data) => {
-            if (err) {
-                throw err
-            } else {
-                const info = JSON.parse(data)
-                return info
-            }
-        })
+        try {
+            const settings = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
+            const info = settings.account
+            return info
+        } catch (err) {
+            throw err
+        }
     }
 
     getUsername() {
         const info = this.getInfo()
-        return info.username
+        return info.relevance
     }
 
     getSession() {

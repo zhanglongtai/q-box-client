@@ -12,6 +12,7 @@ const {
 } = require('electron')
 const Position = require('electron-positioner')
 const fs = require('fs')
+const drivelist = require('drivelist')
 
 const sh = require("./main/squirrelHander.js")
 const userStore = require("./main/store/userStore")
@@ -31,6 +32,7 @@ const win = {
     winLogin: null,
 	winMain: null,
 	winSettings: null,
+	winFolderPanel: null,
 }
 
 // app config
@@ -53,7 +55,7 @@ const config = {
 
 
 // ========== util func ==========
-function log() {
+const log = function() {
     console.log.apply(null, arguments)
 }
 // ========== util func ==========
@@ -188,6 +190,7 @@ ipcMain.on('main-header-settings-clicked', (event, position) => {
 })
 // ========== Main ==========
 
+
 // ========== Menu ==========
 function createMenu(position) {
 	const template = [
@@ -239,6 +242,7 @@ function createMenu(position) {
 }
 // ========== Menu ==========
 
+
 // ========== Login ==========
 function createLogin() {
 	const options = {
@@ -254,9 +258,9 @@ function createLogin() {
 
 	win.winLogin.loadURL(`file://${__dirname}/renderer/login.html`)
 
-	win.winLogin.once('ready-to-show', () => {
-		win.winLogin.show()
-	})
+	// win.winLogin.once('ready-to-show', () => {
+	// 	win.winLogin.show()
+	// })
 }
 
 const showLogin = function() {
@@ -287,13 +291,126 @@ ipcMain.on('login-ready-show', () => {
 })
 
 ipcMain.on('login-finish', (event, args) => {
-	const user = new userStore.UserStore()
+	const user = new userStore.UserStore(config.settingsFile)
 	const { username, session } = args
 	user.save(username, session)
 
 	closeLogin()
+	if (folderFirstSetted()) {
+		createFolderPanel()
+	} else {
+		createTray()
+		createMain()
+		showMain()
+	}
 })
 // ========== Login ==========
+
+
+// ========== FolderPanel ==========
+const createFolderPanel = function() {
+	const options = {
+		width: 400,
+		height: 400,
+		show: false,
+		icon: config.iconPath,
+	}
+	win.winFolderPanel = new BrowserWindow(options)
+
+	// don't display menu
+	win.winFolderPanel.setMenuBarVisibility(false)
+
+	// if (config.environment === 'dev') {
+	// 	win.winFolderPanel.webContents.openDevTools()
+	// }
+
+	win.winFolderPanel.loadURL(`file://${__dirname}/renderer/FolderPanel.html`)
+}
+
+const showFolderPanel = function() {
+	if (win.winFolderPanel !== null) {
+		win.winFolderPanel.show()
+	}
+}
+
+const closeFolderPanel = function() {
+	if (win.winFolderPanel !== null) {
+		win.winFolderPanel.close()
+	}
+}
+
+const fetchFolderList = function() {
+	return new Promise((resolve, reject) => {
+        drivelist.list((error, drives) => {
+			if (error) {
+				reject(error)
+			} else {
+				const list = []
+				drives.forEach((item) => {
+					const tenG = 1024 * 1024 * 10
+					if (item.size > tenG && item.system) {
+						list.push({
+							name: item.displayName,
+						})
+					}
+				})
+
+				resolve(list)
+			}
+		})
+	})
+}
+
+ipcMain.on('folder-panel-ready', (event) => {
+	fetchFolderList()
+	    .then((list) => {
+            const args = {
+				list: list,
+			}
+  
+            event.sender.send('folder-list', args)
+		})
+        .catch((err) => {
+			throw err
+		})
+})
+
+ipcMain.on('folder-panel-show', () => {
+	showFolderPanel()
+})
+
+ipcMain.on('folder-confirm', (event, arg) => {
+	let settings
+	try {
+		settings = fs.readFileSync(
+			config.settingsFile,
+			{ encoding: 'utf-8' }
+		)
+	} catch (err) {
+		throw err
+	}
+	
+	settings.sync.folderFirstSetted = false
+	settings.sync.path = arg.folder
+	settings.syncTemp.folderFirstSetted = false
+	settings.syncTemp.path = arg.folder
+
+	try {
+		fs.writeFileSync(
+			config.settingsFile,
+			JSON.stringify(settings, null, 4)
+		)
+	} catch (err) {
+		throw err
+	}
+
+	closeFolderPanel()
+	createTray()
+	createMain()
+	showMain()
+})
+// ========== FolderPanel ==========
+
 
 // ========== Settings ==========
 function createSettings() {
@@ -355,13 +472,14 @@ ipcMain.on('settings-close', () => {
 })
 // ========== Settings ==========
 
+
 // ========== APP ==========
 const verifySession = function(session) {
 	return
 }
 
 const sessionExpired = function() {
-    const u = new userStore.UserStore()
+    const u = new userStore.UserStore(config.settingsFile)
 	const session = u.getSession()
 
 	if (verifySession(session)) {
@@ -372,13 +490,23 @@ const sessionExpired = function() {
 }
 
 const userLogined = function() {
-	const u = new userStore.UserStore()
+	const u = new userStore.UserStore(config.settingsFile)
 	const username = u.getUsername()
 
 	if (username !== '') {
 		return true
 	} else {
 		return false
+	}
+}
+
+const folderFirstSetted = function() {
+	let settings
+	try {
+		settings = fs.readFileSync(config.settingsFile, { encoding: 'utf-8' })
+		return settings.sync.folderFirstSetted
+	} catch (err) {
+		throw err
 	}
 }
 
@@ -392,9 +520,13 @@ app.on('ready', () => {
 			if (sessionExpired()) {
 				createLogin()
 			} else {
-                createTray()
-				createMain()
-				showMain()
+				if (folderFirstSetted()) {
+                    createFolderPanel()
+				} else {
+					createTray()
+					createMain()
+					showMain()
+				}
 			}
 		} else {
             createLogin()
