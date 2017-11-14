@@ -3,19 +3,7 @@ import PropTypes from "prop-types"
 
 const { ipcRenderer } = window.require('electron')
 
-const randomString = function() {
-    const tables = '1234567890'
-    let random = ''
-    for (let i = 0; i < 16; i++) {
-        const index = Math.floor(Math.random() * 10)
-        const s = tables[index]
-        random += s
-    }
-
-    return random
-}
-
-class WeiXinLogin extends React.Component {
+class Poster extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -29,6 +17,10 @@ class WeiXinLogin extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
             },
+            image: {
+                width: 400,
+                height: 400,
+            },
         }
 
         return (
@@ -36,16 +28,18 @@ class WeiXinLogin extends React.Component {
                 className="poster-container"
                 style={styles.container}
             >
-                <img src={this.props.imgURL} />
+                <img
+                    src={this.props.imgURL}
+                    alt="login-poster"
+                    style={styles.image}
+                />
             </div>
         )
     }
 }
 
-WeiXinLogin.propTypes = {
-    website: PropTypes.string.isRequired,
-    sync: PropTypes.bool.isRequired,
-    setSync: PropTypes.func.isRequired,
+Poster.propTypes = {
+    imgURL: PropTypes.string.isRequired,
 }
 
-export default WeiXinLogin
+export default Poster

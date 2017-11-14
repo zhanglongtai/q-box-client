@@ -39,18 +39,19 @@ class Win32 extends React.Component {
                 className="win32-folder-container"
                 style={styles.container}
             >
-                {this.props.folderList.map((item, index) => {
+                {this.props.list.map((item, index) => {
                     return (
                         <CheckCircle
                             key={index}
                             selected={this.state.selected === index}
-                            text={item.name}
+                            text={item}
                             onToggle={() => {
                                 this.changeFolder(index)
-                                this.props.recordFolder(item.name)
+                                this.props.recordFolder(item)
                             }}
                             style={{
                                 margin: '5px 10px 5px 10px',
+                                width: 200,
                             }}
                         />
                     )

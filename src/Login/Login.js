@@ -1,6 +1,9 @@
 import React from "react"
 // import PropTypes from "prop-types"
 
+import WeiXinLogin from "./WeiXinLogin"
+import Poster from "./Poster"
+
 const { ipcRenderer } = window.require('electron')
 
 class Login extends React.Component {
@@ -21,8 +24,12 @@ class Login extends React.Component {
                 qrcodeURL: urls.qrcodeURL,
             });
 
-            event.sender.send()
+            event.sender.send('login-ready-show')
         })
+
+        this.timer = setTimeout(() => {
+            this.finishLogin()
+        }, 2000)
     }
 
     verifyLogin() {
@@ -54,6 +61,8 @@ class Login extends React.Component {
             container: {
                 width: 800,
                 height: 400,
+                display: 'flex',
+                alignItems: 'center',
             },
         }
 
