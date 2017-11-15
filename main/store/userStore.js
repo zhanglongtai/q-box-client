@@ -8,9 +8,11 @@ class UserStore {
     save(username, session) {
         let settings
         try {
-            settings = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
-            settings.account.relevance = username
-            settings.accountTemp.relevance = username
+            const data = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
+            settings = JSON.parse(data)
+
+            settings.account.userID = username
+            settings.accountTemp.userID = username
             settings.account.session = session
             settings.accountTemp.session = session
         } catch (err) {
@@ -29,7 +31,8 @@ class UserStore {
 
     getInfo() {
         try {
-            const settings = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
+            const data = fs.readFileSync(this.filePath, { encoding: 'utf-8' })
+            const settings = JSON.parse(data)
             const info = settings.account
             return info
         } catch (err) {
@@ -39,7 +42,7 @@ class UserStore {
 
     getUsername() {
         const info = this.getInfo()
-        return info.relevance
+        return info.userID
     }
 
     getSession() {

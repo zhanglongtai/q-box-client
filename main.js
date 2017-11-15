@@ -1,5 +1,3 @@
-import { create } from 'domain';
-
 const {
 	app,
 	Menu,
@@ -12,10 +10,11 @@ const {
 } = require('electron')
 const Position = require('electron-positioner')
 const fs = require('fs')
-const drivelist = require('drivelist')
+const cp = require("child_process")
 
 const sh = require("./main/squirrelHander.js")
 const userStore = require("./main/store/userStore")
+const fetchFolderList = require("./main/diskInfoCMD")
 
 let reactDevtool = null
 switch (process.platform) {
@@ -49,8 +48,8 @@ const config = {
 	menu: null,
 	sync: true,
 	handlingSquirrelEvent: false,
-	qrcodeURL: '',
-	imgURL: '',
+	qrcodeURL: `${__dirname}/renderer/image/qrcode.png`,
+	loginImgURL: `${__dirname}/renderer/image/login.jpg`,
 }
 
 
@@ -95,7 +94,10 @@ if (isSecondInstance) {
 // 	}
 // }
 
-if (process.platform === 'win32' && process.argv.length > 1) {
+if (process.platform === 'win32' &&
+	process.argv.length > 1 &&
+	process.argv[1] !== '.'
+) {
 	config.installing = true
 	const arg = process.argv[1]
 	sh.handleSquirrelEvent(app, arg)
@@ -246,8 +248,8 @@ function createMenu(position) {
 // ========== Login ==========
 function createLogin() {
 	const options = {
-		width: 400,
-		height: 600,
+		width: 800,
+		height: 400,
 		show: false,
 		icon: config.iconPath,
 	}
@@ -255,6 +257,10 @@ function createLogin() {
 
 	// don't display menu
 	win.winLogin.setMenuBarVisibility(false)
+
+	if (config.environment === 'dev') {
+		win.winLogin.webContents.openDevTools()
+	}
 
 	win.winLogin.loadURL(`file://${__dirname}/renderer/login.html`)
 
@@ -277,7 +283,7 @@ const closeLogin = function() {
 }
 
 ipcMain.on('login-ready', (event) => {
-	const imgURL = config.imgURL
+	const imgURL = config.loginImgURL
 	const qrcodeURL = config.qrcodeURL
 	
 	event.sender.send('login-url', {
@@ -299,15 +305,125 @@ ipcMain.on('login-finish', (event, args) => {
 	if (folderFirstSetted()) {
 		createFolderPanel()
 	} else {
-		createTray()
-		createMain()
-		showMain()
+		startMain()
 	}
 })
 // ========== Login ==========
 
 
 // ========== FolderPanel ==========
+const handleFolder = function() {
+	const platform = process.platform
+	switch (platform) {
+		case 'linux':
+			setLinuxFolder()
+			    .then((path) => {
+					createFolder(path)
+				})
+				.then((result) => {
+					if (result.success) {
+						setFolderSetting(result.path)
+						startMain()
+					}
+				})
+				.catch((err) => {
+					throw err
+				})
+			break
+		case 'darwin':
+			setDarwinFolder()
+				.then((path) => {
+					createFolder(path)
+				})
+				.then((result) => {
+					if (result.success) {
+						setFolderSetting(result.path)
+						startMain()
+					}
+				})
+				.catch((err) => {
+					throw err
+				})
+			break
+		case 'win32':
+			createFolderPanel()
+			break
+	}
+}
+
+const setFolderSetting = function(path) {
+	let settings
+	try {
+		const data = fs.readFileSync(config.settingsFile, { encoding: 'utf-8' })
+		settings = JSON.parse(data)
+
+		settings.sync.folderFirstSetted = false
+		settings.syncTemp.folderFirstSetted = false
+		settings.sync.path = path
+		settings.syncTemp.path = path
+	} catch (err) {
+		throw err
+	}
+
+	try {
+		fs.writeFileSync(
+			config.settingsFile,
+			JSON.stringify(settings, null, 4)
+		)
+	} catch (err) {
+		throw err
+	}
+}
+
+const createFolder = function(path) {
+	if(fs.existsSync(path) === false) {
+		try {
+			fs.mkdirSync(path)
+			return { success: true, path: path }
+		} catch (error) {
+			throw error
+		}
+	} else {
+		return { success: true, path: path }
+	}
+}
+
+const setDarwinFolder = function() {
+	return new Promise((resolve, reject) => {
+		const path = '/User'
+		const whoami = cp.spawn('whoami')
+		
+		whoami.stdout.on('data', (data) => {
+			resolve(`${path}/${data}/Qbox`)
+		})
+
+		whoami.stderr.on('data', (data) => {
+			reject(new Error(`${data}`))
+		})
+	})
+}
+
+const setLinuxFolder = function() {
+	return new Promise((resolve, reject) => {
+		const path = '/home'
+		const whoami = cp.spawn('whoami')
+		
+		whoami.stdout.on('data', (data) => {
+			resolve(`${path}/${data}/Qbox`)
+		})
+
+		whoami.stderr.on('data', (data) => {
+			reject(new Error(`${data}`))
+		})
+	})
+}
+
+const setWin32Folder = function(path) {
+	return new Promise((resolve) => {
+		resolve(`${path}\\Qbox`)
+	})
+}
+
 const createFolderPanel = function() {
 	const options = {
 		width: 400,
@@ -320,11 +436,15 @@ const createFolderPanel = function() {
 	// don't display menu
 	win.winFolderPanel.setMenuBarVisibility(false)
 
-	// if (config.environment === 'dev') {
-	// 	win.winFolderPanel.webContents.openDevTools()
-	// }
+	if (config.environment === 'dev') {
+		win.winFolderPanel.webContents.openDevTools()
+	}
 
 	win.winFolderPanel.loadURL(`file://${__dirname}/renderer/FolderPanel.html`)
+
+	// win.winFolderPanel.once('ready-to-show', () => {
+	// 	win.winFolderPanel.show()
+	// })
 }
 
 const showFolderPanel = function() {
@@ -339,36 +459,10 @@ const closeFolderPanel = function() {
 	}
 }
 
-const fetchFolderList = function() {
-	return new Promise((resolve, reject) => {
-        drivelist.list((error, drives) => {
-			if (error) {
-				reject(error)
-			} else {
-				const list = []
-				drives.forEach((item) => {
-					const tenG = 1024 * 1024 * 10
-					if (item.size > tenG && item.system) {
-						list.push({
-							name: item.displayName,
-						})
-					}
-				})
-
-				resolve(list)
-			}
-		})
-	})
-}
-
 ipcMain.on('folder-panel-ready', (event) => {
 	fetchFolderList()
 	    .then((list) => {
-            const args = {
-				list: list,
-			}
-  
-            event.sender.send('folder-list', args)
+            event.sender.send('folder-list', list)
 		})
         .catch((err) => {
 			throw err
@@ -379,35 +473,22 @@ ipcMain.on('folder-panel-show', () => {
 	showFolderPanel()
 })
 
-ipcMain.on('folder-confirm', (event, arg) => {
-	let settings
-	try {
-		settings = fs.readFileSync(
-			config.settingsFile,
-			{ encoding: 'utf-8' }
-		)
-	} catch (err) {
-		throw err
-	}
-	
-	settings.sync.folderFirstSetted = false
-	settings.sync.path = arg.folder
-	settings.syncTemp.folderFirstSetted = false
-	settings.syncTemp.path = arg.folder
-
-	try {
-		fs.writeFileSync(
-			config.settingsFile,
-			JSON.stringify(settings, null, 4)
-		)
-	} catch (err) {
-		throw err
-	}
-
-	closeFolderPanel()
-	createTray()
-	createMain()
-	showMain()
+ipcMain.on('folder-confirm', (event, folderPath) => {
+	setWin32Folder(folderPath)
+		.then((path) => {
+			return createFolder(path)
+		})
+		.then((result) => {
+			log('result', result)
+			if (result.success) {
+				setFolderSetting(result.path)
+				closeFolderPanel()
+				app.relaunch()
+			}
+		})
+		.catch((err) => {
+			throw err
+		})
 })
 // ========== FolderPanel ==========
 
@@ -475,7 +556,7 @@ ipcMain.on('settings-close', () => {
 
 // ========== APP ==========
 const verifySession = function(session) {
-	return
+	return true
 }
 
 const sessionExpired = function() {
@@ -483,9 +564,9 @@ const sessionExpired = function() {
 	const session = u.getSession()
 
 	if (verifySession(session)) {
-		return true
-	} else {
 		return false
+	} else {
+		return true
 	}
 }
 
@@ -503,11 +584,20 @@ const userLogined = function() {
 const folderFirstSetted = function() {
 	let settings
 	try {
-		settings = fs.readFileSync(config.settingsFile, { encoding: 'utf-8' })
+		const data = fs.readFileSync(config.settingsFile, { encoding: 'utf-8' })
+		settings = JSON.parse(data)
 		return settings.sync.folderFirstSetted
 	} catch (err) {
 		throw err
 	}
+}
+
+const startMain = function() {
+	createTray()
+	log('run createMain')
+	createMain()
+	log('run showMain')
+	showMain()
 }
 
 app.on('ready', () => {
@@ -521,11 +611,9 @@ app.on('ready', () => {
 				createLogin()
 			} else {
 				if (folderFirstSetted()) {
-                    createFolderPanel()
+					handleFolder()
 				} else {
-					createTray()
-					createMain()
-					showMain()
+					startMain()
 				}
 			}
 		} else {
@@ -534,6 +622,7 @@ app.on('ready', () => {
 	}
 })
 // ========== APP ==========
+
 
 // ========== Toogle Devtools ==========
 ipcMain.on('toogle-devtools', () => {
@@ -547,6 +636,7 @@ ipcMain.on('toogle-devtools', () => {
 	}
 })
 // ========== Toogle Devtools ==========
+
 
 // ========== fetch activity list ==========
 ipcMain.on('fetch-activity-list', (event) => {

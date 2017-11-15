@@ -38,9 +38,7 @@ class FolderPanel extends React.Component {
     }
 
     submitFolder() {
-        ipcRenderer.send('folder-confirm', {
-            folder: this.state.folder,
-        })
+        ipcRenderer.send('folder-confirm', this.state.folder)
     }
 
     render() {

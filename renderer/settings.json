@@ -1,13 +1,13 @@
 {
     "account": {
-        "relevance": "",
-        "session": "",
+        "userID": "test",
+        "session": "abcd",
         "email": "xxx@example.com",
         "space": ""
     },
     "accountTemp": {
-        "relevance": "username",
-        "session": "",
+        "userID": "test",
+        "session": "abcd",
         "email": "xxx@example.com",
         "space": "1G"
     },
@@ -56,13 +56,13 @@
         "serverPortDefault": "8080"
     },
     "sync": {
-        "folderFirstSetted": true,
-        "path": "",
+        "folderFirstSetted": false,
+        "path": "D:\\Qbox",
         "pathDefault": ""
     },
     "syncTemp": {
-        "folderFirstSetted": true,
-        "path": "",
+        "folderFirstSetted": false,
+        "path": "D:\\Qbox",
         "pathDefault": ""
     }
 }
