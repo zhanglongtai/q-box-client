@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "@blueprintjs/core": "^1.31.0",
-    "drivelist": "^5.2.7",
     "electron-positioner": "^3.0.0",
     "office-ui-fabric-react": "^5.8.2",
     "python-shell": "^0.4.0",
@@ -34,6 +33,7 @@
     "electron": "^1.7.8",
     "electron-builder": "^19.37.2",
     "electron-packager": "^9.1.0",
+    "electron-rebuild": "^1.6.0",
     "electron-winstaller": "^2.6.3",
     "eslint-plugin-react": "^7.4.0",
     "inquirer": "^3.3.0",

@@ -1,12 +1,12 @@
 {
     "account": {
-        "userID": "test",
+        "userID": "",
         "session": "abcd",
         "email": "xxx@example.com",
-        "space": ""
+        "space": "1G"
     },
     "accountTemp": {
-        "userID": "test",
+        "userID": "",
         "session": "abcd",
         "email": "xxx@example.com",
         "space": "1G"
@@ -56,12 +56,12 @@
         "serverPortDefault": "8080"
     },
     "sync": {
-        "folderFirstSetted": false,
+        "folderFirstSetted": true,
         "path": "D:\\Qbox",
         "pathDefault": ""
     },
     "syncTemp": {
-        "folderFirstSetted": false,
+        "folderFirstSetted": true,
         "path": "D:\\Qbox",
         "pathDefault": ""
     }

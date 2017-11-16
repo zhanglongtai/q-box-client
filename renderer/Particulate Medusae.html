@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)https://jayweeks.com/medusae/ -->
+<html class="no-js"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Particulate Medusae</title>
+
+    <meta name="description" content="Soft body jellyfish simulation. Built with Particulate.js and Three.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="https://jayweeks.com/medusae/build/static/img/favicon.ico">
+    <link rel="stylesheet" href="./Particulate Medusae_files/style.css">
+
+  </head>
+  <body class="">
+    <article id="info" class="modal info-modal">
+      <h1>Medusae</h1>
+      <div class="info-section">
+        <dl>
+          <dt>Concept, Design &amp; Code</dt>
+          <dd><a href="http://jayweeks.com/">Jay Weeks</a></dd>
+        </dl>
+        <dl>
+          <dt>Audio Design</dt>
+          <dd>JP Arsenault</dd>
+        </dl>
+      </div>
+      <div class="info-section">
+        <dl>
+          <dt>Physics</dt>
+          <dd><a href="http://particulatejs.org/">Particulate</a></dd>
+        </dl>
+        <dl>
+          <dt>Graphics</dt>
+          <dd><a href="http://threejs.org/">Three</a></dd>
+        </dl>
+      </div>
+      <div class="info-section">
+        <dl>
+          <dt>Source</dt>
+          <dd><a href="http://github.com/jpweeks/particulate-medusae">Github</a></dd>
+        </dl>
+        <dl>
+          <dt>Process</dt>
+          <dd><a href="https://www.flickr.com/photos/jpweeks/sets/72157646887502644/">Flickr</a></dd>
+        </dl>
+      </div>
+    </article>
+    <div id="cover-info" class="modal-cover"></div>
+
+    <div id="container-controls" class="active" style="display: none">
+      <div id="toggle-info" class="controls-button">
+        <div class="label">About</div>
+      </div>
+      <div id="toggle-dots" class="controls-button">
+        <div class="label">Particles</div>
+      </div>
+      <div id="menu-colors" class="controls-menu" style=""><div class="inner"><div class="color"><div class="preview" style="background: rgb(153, 114, 153);"></div><div class="label">Tentacles</div><input value="#997299" type="color"></div><div class="color"><div class="preview" style="background: rgb(255, 221, 233);"></div><div class="label">Hood Contour</div><input value="#ffdde9" type="color"></div><div class="color"><div class="preview" style="background: rgb(228, 187, 238);"></div><div class="label">Belly Primary</div><input value="#e4bbee" type="color"></div><div class="color"><div class="preview" style="background: rgb(36, 17, 56);"></div><div class="label">Belly Secondary</div><input value="#241138" type="color"></div><div class="color"><div class="preview" style="background: rgb(239, 166, 240);"></div><div class="label">Mouth Primary</div><input value="#efa6f0" type="color"></div><div class="color"><div class="preview" style="background: rgb(74, 103, 206);"></div><div class="label">Mouth Secondary</div><input value="#4a67ce" type="color"></div><div class="color"><div class="preview" style="background: rgb(255, 169, 210);"></div><div class="label">Hood Primary</div><input value="#ffa9d2" type="color"></div><div class="color"><div class="preview" style="background: rgb(112, 37, 108);"></div><div class="label">Hood Secondary</div><input value="#70256c" type="color"></div><div class="color"><div class="preview" style="background: rgb(65, 90, 181);"></div><div class="label">Hood Tertiary</div><input value="#415ab5" type="color"></div></div></div>
+      <div id="toggle-colors" class="controls-button has-menu">
+        <div class="label">Colors</div>
+      </div>
+      <div id="toggle-audio" class="controls-button">
+        <div class="label">Audio</div>
+      </div>
+      <div id="toggle-postfx" class="controls-button active">
+        <div class="label">Post FX</div>
+      </div>
+      <div id="toggle-sim" class="controls-button active">
+        <div class="label">Run Sim</div>
+      </div>
+    </div>
+
+    <div id="container-stats" class="stats-panel">
+      <div id="container-graphs"><div class="graph"><canvas width="380" height="24" style="width: 380px; height: 24px;"></canvas><div class="label">Physics (ms) 4.176</div></div><div class="graph"><canvas width="380" height="24" style="width: 380px; height: 24px;"></canvas><div class="label">Graphics (ms) 0.720</div></div></div>
+      <dl>
+        <dt>Particles</dt>
+        <dd id="particle-count">14,828</dd>
+      </dl>
+      <dl>
+        <dt>Constraints</dt>
+        <dd id="constraint-count">18,247</dd>
+      </dl>
+      <dl>
+        <dt>Forces</dt>
+        <dd id="force-count">2</dd>
+      </dl>
+    </div>
+
+    <div id="container"></div>
+
+
+      <script src="./Particulate Medusae_files/three.min.js.下载"></script>
+      <script src="./Particulate Medusae_files/app.min.js.下载"></script>
+
+    <script>
+      App.STATIC_URL = "./build/static/";
+    </script>
+  
+
+<audio controls="controls" style="display: none;"></audio></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>

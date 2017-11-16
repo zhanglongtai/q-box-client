@@ -248,8 +248,10 @@ function createMenu(position) {
 // ========== Login ==========
 function createLogin() {
 	const options = {
-		width: 800,
-		height: 400,
+		// width: 800,
+		// height: 400,
+		width: 600,
+		height: 600,
 		show: false,
 		icon: config.iconPath,
 	}
@@ -262,7 +264,8 @@ function createLogin() {
 		win.winLogin.webContents.openDevTools()
 	}
 
-	win.winLogin.loadURL(`file://${__dirname}/renderer/login.html`)
+	// win.winLogin.loadURL(`file://${__dirname}/renderer/login.html`)
+	win.winLogin.loadURL(`file://${__dirname}/renderer/login3D.html`)
 
 	// win.winLogin.once('ready-to-show', () => {
 	// 	win.winLogin.show()
@@ -305,7 +308,7 @@ ipcMain.on('login-finish', (event, args) => {
 	if (folderFirstSetted()) {
 		createFolderPanel()
 	} else {
-		startMain()
+		app.relaunch()
 	}
 })
 // ========== Login ==========

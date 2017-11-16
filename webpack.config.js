@@ -5,6 +5,7 @@ module.exports = {
     main: './src/mainIndex.js',
     settings: './src/settingsIndex.js',
     login: './src/loginIndex.js',
+    login3D: './src/login3DIndex.js',
     folderPanel: './src/folderPanelIndex.js'
   },
   
