@@ -27,9 +27,9 @@ class Login3D extends React.Component {
             event.sender.send('login-ready-show')
         })
 
-        // this.timer = setTimeout(() => {
-        //     this.finishLogin()
-        // }, 2000)
+        this.timer = setTimeout(() => {
+            this.finishLogin()
+        }, 5000)
     }
 
     verifyLogin() {

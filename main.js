@@ -160,6 +160,11 @@ function createMain() {
 	})
 
 	win.winMain.loadURL(`file://${__dirname}/renderer/main.html`)
+
+	win.winMain.on('ready-to-show', () => {
+		closeLogin()
+		closeFolderPanel()
+	})
 }
 
 function showMain() {
@@ -250,8 +255,8 @@ function createLogin() {
 	const options = {
 		// width: 800,
 		// height: 400,
-		width: 600,
-		height: 600,
+		width: 620,
+		height: 620,
 		show: false,
 		icon: config.iconPath,
 	}
@@ -285,6 +290,13 @@ const closeLogin = function() {
 	}
 }
 
+const hideLogin = function() {
+	if (win.winLogin !== null) {
+		win.winLogin.hide()
+		win.winLogin = null
+	}
+}
+
 ipcMain.on('login-ready', (event) => {
 	const imgURL = config.loginImgURL
 	const qrcodeURL = config.qrcodeURL
@@ -304,11 +316,11 @@ ipcMain.on('login-finish', (event, args) => {
 	const { username, session } = args
 	user.save(username, session)
 
-	closeLogin()
+	hideLogin()
 	if (folderFirstSetted()) {
-		createFolderPanel()
+		handleFolder()
 	} else {
-		app.relaunch()
+		startMain()
 	}
 })
 // ========== Login ==========
@@ -429,8 +441,8 @@ const setWin32Folder = function(path) {
 
 const createFolderPanel = function() {
 	const options = {
-		width: 400,
-		height: 400,
+		width: 420,
+		height: 420,
 		show: false,
 		icon: config.iconPath,
 	}
@@ -443,11 +455,12 @@ const createFolderPanel = function() {
 		win.winFolderPanel.webContents.openDevTools()
 	}
 
-	win.winFolderPanel.loadURL(`file://${__dirname}/renderer/FolderPanel.html`)
+	win.winFolderPanel.loadURL(`file://${__dirname}/renderer/folderPanel.html`)
 
-	// win.winFolderPanel.once('ready-to-show', () => {
-	// 	win.winFolderPanel.show()
-	// })
+	win.winFolderPanel.once('ready-to-show', () => {
+		// win.winFolderPanel.show()
+		closeLogin()
+	})
 }
 
 const showFolderPanel = function() {
@@ -459,6 +472,12 @@ const showFolderPanel = function() {
 const closeFolderPanel = function() {
 	if (win.winFolderPanel !== null) {
 		win.winFolderPanel.close()
+	}
+}
+
+const hideFolderPanel = function() {
+	if (win.winFolderPanel !== null) {
+		win.winFolderPanel.hide()
 	}
 }
 
@@ -482,11 +501,10 @@ ipcMain.on('folder-confirm', (event, folderPath) => {
 			return createFolder(path)
 		})
 		.then((result) => {
-			log('result', result)
 			if (result.success) {
 				setFolderSetting(result.path)
-				closeFolderPanel()
-				app.relaunch()
+				hideFolderPanel()
+				startMain()
 			}
 		})
 		.catch((err) => {
@@ -597,9 +615,7 @@ const folderFirstSetted = function() {
 
 const startMain = function() {
 	createTray()
-	log('run createMain')
 	createMain()
-	log('run showMain')
 	showMain()
 }
 
