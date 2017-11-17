@@ -12,7 +12,7 @@ const Position = require('electron-positioner')
 const fs = require('fs')
 const cp = require("child_process")
 
-const sh = require("./main/squirrelHander.js")
+const handleSquirrelEvent = require("./main/squirrelHander.js")
 const userStore = require("./main/store/userStore")
 const fetchFolderList = require("./main/diskInfoCMD")
 
@@ -100,7 +100,7 @@ if (process.platform === 'win32' &&
 ) {
 	config.installing = true
 	const arg = process.argv[1]
-	sh.handleSquirrelEvent(app, arg)
+	handleSquirrelEvent(app, arg)
 }
 // ========== handle squirrel event ==========
 

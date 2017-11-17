@@ -216,6 +216,4 @@ function handleSquirrelEvent(app, event) {
     }
 }
 
-module.exports = {
-    handleSquirrelEvent: handleSquirrelEvent,
-}
+module.exports = handleSquirrelEvent
